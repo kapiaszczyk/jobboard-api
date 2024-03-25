@@ -1,0 +1,20 @@
+version: '2.25.0'
+name: postgres-database
+
+services:
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: api
+      POSTGRES_PASSWORD: apipassword
+      POSTGRES_DB: jobboard
+    volumes:
+      - ./database:/docker-entrypoint-initdb.d
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres-network
+
+networks:
+  postgres-network:
+    driver: bridge
