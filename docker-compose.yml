@@ -1,9 +1,17 @@
 version: '2.25.0'
-name: postgres-database
+name: jobboard
 
 services:
+  api:
+    image: kapiaszczyk/jobboard-api:0.0.1
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
   postgres:
-    image: postgres:latest
+    image: postgres:16
     environment:
       POSTGRES_USER: api
       POSTGRES_PASSWORD: apipassword
