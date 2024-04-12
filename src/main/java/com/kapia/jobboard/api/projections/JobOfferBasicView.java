@@ -1,10 +1,8 @@
 package com.kapia.jobboard.api.projections;
 
-public interface JobOfferProjection {
+public interface JobOfferBasicView {
 
     String getName();
-
-    String getShortDescription();
 
     String getContractType();
 
@@ -15,5 +13,9 @@ public interface JobOfferProjection {
     String getExperience();
 
     String getOperatingMode();
+
+    String getCompanyName();
+
+    String getAddressCity();
 
 }
