@@ -2,14 +2,14 @@ version: '2.25.0'
 name: jobboard
 
 services:
-  api:
-    image: kapiaszczyk/jobboard-api:0.0.1
-    ports:
-      - "3000:3000"
-    depends_on:
-      - postgres
-    networks:
-      - postgres-network
+   api:
+     image: kapiaszczyk/jobboard-api:0.0.2
+     ports:
+       - "3000:3000"
+     depends_on:
+       - postgres
+     networks:
+       - postgres-network
   postgres:
     image: postgres:16
     environment:

@@ -37,13 +37,15 @@ public class JobOffer {
     private SalaryType salaryType;
 
     @NotNull
-    private String seniorityLevel;
+    private String experience;
 
     @NotNull
-    private boolean isRemote;
+    @Enumerated(EnumType.STRING)
+    private OperatingMode operatingMode;
 
-    @NotNull
-    private boolean isHybrid;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
@@ -60,7 +62,7 @@ public class JobOffer {
     public JobOffer() {
     }
 
-    public JobOffer(Long id, String name, String shortDescription, String description, String contractType, int salary, String salaryCurrency, SalaryType salaryType, String seniorityLevel, boolean isRemote, boolean isHybrid, Company company, Set<JobOfferTechnology> technologies) {
+    public JobOffer(Long id, String name, String shortDescription, String description, String contractType, int salary, String salaryCurrency, SalaryType salaryType, String experience, OperatingMode operatingMode, Address address, Company company, Set<JobOfferTechnology> technologies) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -69,9 +71,9 @@ public class JobOffer {
         this.salary = salary;
         this.salaryCurrency = salaryCurrency;
         this.salaryType = salaryType;
-        this.seniorityLevel = seniorityLevel;
-        this.isRemote = isRemote;
-        this.isHybrid = isHybrid;
+        this.experience = experience;
+        this.operatingMode = operatingMode;
+        this.address = address;
         this.company = company;
         this.technologies = technologies;
     }
@@ -140,28 +142,28 @@ public class JobOffer {
         this.salaryType = salaryType;
     }
 
-    public String getSeniorityLevel() {
-        return seniorityLevel;
+    public String getExperience() {
+        return experience;
     }
 
-    public void setSeniorityLevel(String seniorityLevel) {
-        this.seniorityLevel = seniorityLevel;
+    public void setExperience(String experience) {
+        this.experience = experience;
     }
 
-    public boolean isRemote() {
-        return isRemote;
+    public OperatingMode getOperatingMode() {
+        return operatingMode;
     }
 
-    public void setRemote(boolean remote) {
-        isRemote = remote;
+    public void setOperatingMode(OperatingMode operatingMode) {
+        this.operatingMode = operatingMode;
     }
 
-    public boolean isHybrid() {
-        return isHybrid;
+    public Address getAddress() {
+        return address;
     }
 
-    public void setHybrid(boolean hybrid) {
-        isHybrid = hybrid;
+    public void setAddress(Address address) {
+        this.address = address;
     }
 
     public Company getCompany() {
@@ -180,14 +182,16 @@ public class JobOffer {
         this.technologies = technologies;
     }
 
-    /*
-        CREATE TYPE salary_type_enum AS ENUM ('hourly', 'monthly', 'annual', 'other');
-     */
-
     public enum SalaryType {
         hourly,
         monthly,
         annual,
         other
+    }
+
+    public enum OperatingMode {
+        remote,
+        hybrid,
+        onsite
     }
 }
