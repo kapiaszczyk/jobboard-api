@@ -20,7 +20,6 @@ public class JobOfferController {
         this.jobOfferService = jobOfferService;
     }
 
-    // Get all job offers
     @GetMapping
     public ResponseEntity<?> getAllJobOffers() {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllJobOffers());
@@ -28,12 +27,22 @@ public class JobOfferController {
 
     @GetMapping("/basic")
     public ResponseEntity<?> getAllJobOffersProjected() {
-        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllProjectedBy());
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllBasicProjectedBy());
     }
 
     @GetMapping("/basic/{id}")
     public ResponseEntity<?> getJobOfferProjectedById(@PathVariable(value = "id") Long id) {
-        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findProjectedById(id));
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findBasicProjectedById(id));
+    }
+
+    @GetMapping("/detailed")
+    public ResponseEntity<?> getAllJobOffersDetailedProjected() {
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllDetailedProjectedBy());
+    }
+
+    @GetMapping("/detailed/{id}")
+    public ResponseEntity<?> getJobOfferDetailedProjectedById(@PathVariable(value = "id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findDetailedProjectedById(id));
     }
 
     // Get job offer by id
