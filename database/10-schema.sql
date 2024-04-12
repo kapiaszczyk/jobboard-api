@@ -40,9 +40,12 @@
 --     salary_type salary_type_enum NOT NULL,
 --     experience VARCHAR(255) NOT NULL,
 --     operating_mode operating_mode_enum NOT NULL,
+--     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+--     expires_at TIMESTAMP NOT NULL,
 --     company_id INT,
 --     address_id INT,
---     FOREIGN KEY (company_id) REFERENCES company(id)
+--     FOREIGN KEY (company_id) REFERENCES company(id),
 --     FOREIGN KEY (address_id) REFERENCES address(id)
 -- );
 
