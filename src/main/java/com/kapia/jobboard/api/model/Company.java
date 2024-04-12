@@ -101,6 +101,14 @@ public class Company {
         this.addresses = addresses;
     }
 
+    public void addAddresses(Set<Address> addresses) {
+        this.setAddresses(addresses);
+
+        for (Address address : addresses) {
+            address.setCompany(this);
+        }
+    }
+
     @Override
     public String toString() {
         return "Company{" +

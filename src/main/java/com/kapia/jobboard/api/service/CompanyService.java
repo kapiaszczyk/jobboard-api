@@ -1,5 +1,7 @@
 package com.kapia.jobboard.api.service;
 
+import com.kapia.jobboard.api.dto.CompanyAddressDTO;
+import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
 import com.kapia.jobboard.api.repository.CompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class CompanyService {
@@ -26,4 +29,14 @@ public class CompanyService {
         return companyRepository.findByName(name);
     }
 
+    public Company add(CompanyAddressDTO companyAddressDTO) {
+        Company company = companyAddressDTO.getCompany();
+        Set<Address> addressSet = companyAddressDTO.getAddresses();
+        if (company == null || addressSet.isEmpty()) throw new RuntimeException("Incomplete data");
+
+        company.addAddresses(addressSet);
+
+        return companyRepository.save(company);
+
+    }
 }
