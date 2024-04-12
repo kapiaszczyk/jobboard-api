@@ -14,7 +14,6 @@ public class JobOfferController {
 
     private final JobOfferService jobOfferService;
 
-
     @Autowired
     public JobOfferController(JobOfferService jobOfferService) {
         this.jobOfferService = jobOfferService;
@@ -24,6 +23,11 @@ public class JobOfferController {
     @GetMapping
     public ResponseEntity<?> getAllJobOffers() {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllJobOffers());
+    }
+
+    @GetMapping("/projected")
+    public ResponseEntity<?> getAllJobOffersProjected() {
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findAllProjectedBy());
     }
 
     // Get job offer by id

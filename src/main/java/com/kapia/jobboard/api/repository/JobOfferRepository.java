@@ -1,6 +1,7 @@
 package com.kapia.jobboard.api.repository;
 
 import com.kapia.jobboard.api.model.JobOffer;
+import com.kapia.jobboard.api.projections.JobOfferProjection;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -15,6 +16,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
             "LEFT JOIN FETCH j.technologies " +
             "LEFT JOIN FETCH j.company.addresses")
     List<JobOffer> findAll();
+
+    List<JobOfferProjection> findAllProjectedBy();
 
     List<JobOffer> findJobOfferByName(String name);
 

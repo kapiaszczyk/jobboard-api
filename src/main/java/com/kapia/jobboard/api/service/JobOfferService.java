@@ -1,6 +1,7 @@
 package com.kapia.jobboard.api.service;
 
 import com.kapia.jobboard.api.model.JobOffer;
+import com.kapia.jobboard.api.projections.JobOfferProjection;
 import com.kapia.jobboard.api.repository.JobOfferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,10 @@ public class JobOfferService {
 
     public List<JobOffer> findAllJobOffers() {
         return jobOfferRepository.findAll();
+    }
+
+    public List<JobOfferProjection> findAllProjectedBy() {
+        return jobOfferRepository.findAllProjectedBy();
     }
 
     public List<JobOffer> findJobOfferByName(String name) {
