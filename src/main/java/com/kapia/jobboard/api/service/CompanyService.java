@@ -4,6 +4,7 @@ import com.kapia.jobboard.api.dto.CompanyAddressDTO;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
 import com.kapia.jobboard.api.repository.CompanyRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,16 @@ public class CompanyService {
 
         return companyRepository.save(company);
 
+    }
+
+    @Transactional
+    public Company updateAddresses(Set<Address> addresses, long id) {
+        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+
+        companyToUpdate.addAddresses(addresses);
+
+        companyRepository.save(companyToUpdate);
+
+        return companyToUpdate;
     }
 }

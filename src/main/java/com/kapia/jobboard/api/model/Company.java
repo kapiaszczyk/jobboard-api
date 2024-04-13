@@ -102,7 +102,13 @@ public class Company {
     }
 
     public void addAddresses(Set<Address> addresses) {
-        this.setAddresses(addresses);
+
+        if(this.addresses == null) {
+            this.setAddresses(addresses);
+        }
+        else {
+            this.addresses.addAll(addresses);
+        }
 
         for (Address address : addresses) {
             address.setCompany(this);
