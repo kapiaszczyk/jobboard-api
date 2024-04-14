@@ -38,6 +38,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/job-offer/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/job-offer/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 

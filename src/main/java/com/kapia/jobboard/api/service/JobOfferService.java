@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class JobOfferService {
@@ -89,6 +90,61 @@ public class JobOfferService {
         jobOfferRepository.save(jobOffer);
 
         return jobOfferRepository.findProjectedById(jobOffer.getId());
+    }
+
+    /*
+     * Optimisation candidate (generates too many queries to the DB!)
+     */
+    public JobOffer update(JobOfferRequest jobOfferRequest, Long id) {
+        JobOffer jobOfferToUpdate = jobOfferRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid id"));
+
+        jobOfferToUpdate.setName(jobOfferRequest.getName());
+        jobOfferToUpdate.setShortDescription(jobOfferRequest.getShortDescription());
+        jobOfferToUpdate.setDescription(jobOfferRequest.getDescription());
+        jobOfferToUpdate.setContractType(jobOfferRequest.getContractType());
+        jobOfferToUpdate.setSalary(jobOfferRequest.getSalary());
+        jobOfferToUpdate.setSalaryCurrency(jobOfferRequest.getSalaryCurrency());
+        jobOfferToUpdate.setSalaryType(jobOfferRequest.getSalaryType());
+        jobOfferToUpdate.setExperience(jobOfferRequest.getExperience());
+        jobOfferToUpdate.setOperatingMode(jobOfferRequest.getOperatingMode());
+        jobOfferToUpdate.setExpiresAt(jobOfferRequest.getExpiresAt());
+
+        if (!Objects.equals(jobOfferToUpdate.getAddress().getId(), jobOfferRequest.getAddressId())) {
+            Address address = addressRepository.findById(jobOfferRequest.getAddressId())
+                    .orElseThrow(() -> new RuntimeException("Address not found"));
+            jobOfferToUpdate.setAddress(address);
+        }
+
+        List<Technology> technologies = technologyRepository.findAllById(jobOfferRequest.getTechnologies().keySet());
+
+        Map<Long, Technology> technologyMap = technologies.stream()
+                .collect(Collectors.toMap(Technology::getId, tech -> tech));
+
+        Set<JobOfferTechnology> jobOfferTechnologies = jobOfferToUpdate.getTechnologies();
+
+        for (Map.Entry<Long, String> entry : jobOfferRequest.getTechnologies().entrySet()) {
+            Long technologyId = entry.getKey();
+            String degreeOfKnowledge = entry.getValue();
+
+            // Check if the job offer already has a technology with the given ID
+            Optional<JobOfferTechnology> existingJobOfferTechnologyO = jobOfferTechnologies.stream()
+                    .filter(jot -> jot.getTechnology().getId().equals(technologyId))
+                    .findFirst();
+
+            if (existingJobOfferTechnologyO.isPresent()) {
+                JobOfferTechnology existingJobOfferTechnology = existingJobOfferTechnologyO.get();
+                existingJobOfferTechnology.setDegreeOfKnowledge(degreeOfKnowledge);
+            } else {
+                Technology technology = technologyMap.get(technologyId);
+                JobOfferTechnology newJobOfferTechnology = new JobOfferTechnology(jobOfferToUpdate, technology, degreeOfKnowledge);
+                jobOfferTechnologies.add(newJobOfferTechnology);
+            }
+        }
+
+        jobOfferTechnologies.removeIf(jot -> !jobOfferRequest.getTechnologies().containsKey(jot.getTechnology().getId()));
+
+        return jobOfferRepository.save(jobOfferToUpdate);
+
     }
 
 }

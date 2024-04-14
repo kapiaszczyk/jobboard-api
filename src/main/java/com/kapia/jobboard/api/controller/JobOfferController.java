@@ -40,4 +40,8 @@ public class JobOfferController {
         return ResponseEntity.status(HttpStatus.CREATED).body(jobOfferService.add(jobOfferRequest));
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateJobOffer(@PathVariable Long id, @RequestBody JobOfferRequest jobOfferRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.update(jobOfferRequest, id));
+    }
 }
