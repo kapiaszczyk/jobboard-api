@@ -1,6 +1,8 @@
 package com.kapia.jobboard.api.service;
 
 import com.kapia.jobboard.api.model.JobOffer;
+import com.kapia.jobboard.api.projections.JobOfferBasicView;
+import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.JobOfferRepository;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
 import jakarta.transaction.Transactional;
@@ -29,6 +31,24 @@ public class JobOfferService {
         return jobOfferRepository.findAll();
     }
 
+    public List<JobOfferBasicView> findAllBasicProjectedBy() {
+        return jobOfferRepository.findAllBasicProjectedBy();
+    }
+
+    public Optional<JobOfferBasicView> findBasicProjectedById(Long id) {
+        return jobOfferRepository.findBasicProjectedById(id);
+    }
+
+    public List<JobOfferDetailedView> findAllDetailedProjectedBy() {
+        return jobOfferRepository.findAllDetailedProjectedBy();
+    }
+
+    public Optional<JobOfferDetailedView> findDetailedProjectedById(Long id) {
+        return jobOfferRepository.findDetailedProjectedById(id);
+    }
+
+    public List<JobOffer> findJobOfferByName(String name) {
+        return jobOfferRepository.findJobOfferByName(name);
     public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
 
 //        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);

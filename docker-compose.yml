@@ -3,7 +3,7 @@ name: jobboard
 
 services:
   api:
-    image: kapiaszczyk/jobboard-api:0.0.1
+    image: kapiaszczyk/jobboard-api:0.0.2
     ports:
       - "3000:3000"
     depends_on:
@@ -22,6 +22,7 @@ services:
       - "5432:5432"
     networks:
       - postgres-network
+    command: postgres -c log_statement=all
 
 networks:
   postgres-network:
