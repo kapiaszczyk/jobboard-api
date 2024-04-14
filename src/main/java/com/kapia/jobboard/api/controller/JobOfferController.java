@@ -44,4 +44,10 @@ public class JobOfferController {
     public ResponseEntity<?> updateJobOffer(@PathVariable Long id, @RequestBody JobOfferRequest jobOfferRequest) {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.update(jobOfferRequest, id));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteJobOffer(@PathVariable Long id) {
+        jobOfferService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

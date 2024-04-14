@@ -39,6 +39,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(HttpMethod.GET, "/job-offer/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/job-offer/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE,"/job-offer/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 );
 

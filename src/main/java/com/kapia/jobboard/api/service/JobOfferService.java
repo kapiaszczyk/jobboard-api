@@ -147,4 +147,8 @@ public class JobOfferService {
 
     }
 
+    public void deleteById(long id) {
+        jobOfferRepository.deleteById(id);
+    }
+
 }
