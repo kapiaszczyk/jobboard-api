@@ -41,4 +41,10 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.updateAddresses(addresses, id));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCompany(@PathVariable(value = "id") long id) {
+        companyService.deleteCompany(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
 }

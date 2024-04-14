@@ -3,7 +3,9 @@ package com.kapia.jobboard.api.service;
 import com.kapia.jobboard.api.dto.CompanyAddressDTO;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
+import com.kapia.jobboard.api.model.JobOffer;
 import com.kapia.jobboard.api.repository.CompanyRepository;
+import com.kapia.jobboard.api.repository.JobOfferRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,9 +19,12 @@ public class CompanyService {
 
     private final CompanyRepository companyRepository;
 
+    private final JobOfferRepository jobOfferRepository;
+
     @Autowired
-    public CompanyService(CompanyRepository companyRepository) {
+    public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository) {
         this.companyRepository = companyRepository;
+        this.jobOfferRepository = jobOfferRepository;
     }
 
     public List<Company> findAll() {
@@ -50,5 +55,11 @@ public class CompanyService {
         companyRepository.save(companyToUpdate);
 
         return companyToUpdate;
+    }
+
+    public void deleteCompany(long id) {
+        jobOfferRepository.deleteJobOfferTechnologiesByCompanyId(id);
+        jobOfferRepository.deleteByCompanyId(id);
+        companyRepository.deleteById(id);
     }
 }
