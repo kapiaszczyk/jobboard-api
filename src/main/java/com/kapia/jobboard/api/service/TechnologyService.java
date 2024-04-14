@@ -21,4 +21,8 @@ public class TechnologyService {
         return technologyRepository.findAll();
     }
 
+    public List<Technology> create(List<Technology> technologies) {
+        return technologyRepository.saveAll(technologies);
+    }
+
 }
