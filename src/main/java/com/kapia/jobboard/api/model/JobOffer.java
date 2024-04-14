@@ -1,5 +1,6 @@
 package com.kapia.jobboard.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -78,10 +79,12 @@ public class JobOffer {
 
     @ManyToOne
     @JoinColumn(name = "address_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Address address;
 
     @ManyToOne
     @JoinColumn(name = "company_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Company company;
 
     @OneToMany(
@@ -90,6 +93,7 @@ public class JobOffer {
             orphanRemoval = true
     )
     @JsonManagedReference
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Set<JobOfferTechnology> technologies;
 
     public JobOffer() {

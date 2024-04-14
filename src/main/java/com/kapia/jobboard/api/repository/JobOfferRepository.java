@@ -49,13 +49,5 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
     Optional<JobOfferDetailedView> findDetailedProjectedById(Long id);
 
     List<JobOffer> findJobOfferByName(String name);
-    default List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
-
-        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
-
-        return findAll(specification);
-
-    }
-
 
 }

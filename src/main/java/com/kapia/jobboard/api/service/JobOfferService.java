@@ -5,8 +5,10 @@ import com.kapia.jobboard.api.projections.JobOfferBasicView;
 import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.JobOfferRepository;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
+import com.kapia.jobboard.api.specifications.JobOfferSpecifications;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,14 +51,11 @@ public class JobOfferService {
 
     public List<JobOffer> findJobOfferByName(String name) {
         return jobOfferRepository.findJobOfferByName(name);
-    public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
-
-//        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
-//
-//        return jobOfferRepository.findAll(specification);
-
-        return jobOfferRepository.findJobOfferByCriteria(jobOfferSearchCriteria);
     }
 
+    public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+        return jobOfferRepository.findAll(specification);
+    }
 
 }

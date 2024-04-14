@@ -1,8 +1,6 @@
 package com.kapia.jobboard.api.specifications;
 
-import com.kapia.jobboard.api.model.JobOffer;
-import com.kapia.jobboard.api.model.JobOfferTechnology;
-import com.kapia.jobboard.api.model.Technology;
+import com.kapia.jobboard.api.model.*;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
@@ -35,7 +33,9 @@ public class JobOfferSpecifications {
 
     public static Specification<JobOffer> locationContains(Optional<String> location) {
         return (root, query, builder) -> {
-            return location.map(l -> builder.like(root.get("company").get("addresses").get("location"), "%" + l + "%")).orElse(null);
+            Join<JobOffer, Company> companyJoin = root.join("company");
+            Join<Company, Address> addressJoin = companyJoin.join("addresses");
+            return location.map(l -> builder.like(addressJoin.get("location"), "%" + l + "%")).orElse(null);
         };
     }
 
