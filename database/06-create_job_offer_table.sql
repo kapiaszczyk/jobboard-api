@@ -1,6 +1,13 @@
 CREATE TYPE salary_type_enum AS ENUM ('hourly', 'monthly', 'annual', 'other');
 
+CREATE CAST (character varying AS salary_type_enum)
+  WITH INOUT AS IMPLICIT;
+
+
 CREATE TYPE operating_mode_enum AS ENUM ('remote', 'hybrid', 'onsite');
+
+CREATE CAST (character varying AS operating_mode_enum)
+  WITH INOUT AS IMPLICIT;
 
 -- Job offer table
 CREATE TABLE job_offer (

@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
@@ -21,4 +22,5 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
 
     List<JobOffer> findJobOfferByName(String name);
 
+    Optional<JobOfferProjection> findProjectedById(Long id);
 }
