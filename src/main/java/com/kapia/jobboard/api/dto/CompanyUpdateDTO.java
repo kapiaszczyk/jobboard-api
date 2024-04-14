@@ -1,9 +1,6 @@
 package com.kapia.jobboard.api.dto;
 
-import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
-
-import java.util.Set;
 
 public class CompanyUpdateDTO {
 

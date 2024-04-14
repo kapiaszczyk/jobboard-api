@@ -1,7 +1,6 @@
 package com.kapia.jobboard.api.mapper;
 
 import com.kapia.jobboard.api.dto.TechnologyDTO;
-import com.kapia.jobboard.api.model.Company;
 import com.kapia.jobboard.api.model.Technology;
 import org.springframework.stereotype.Component;
 

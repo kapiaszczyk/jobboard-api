@@ -1,15 +1,5 @@
 package com.kapia.jobboard.api.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.kapia.jobboard.api.model.JobOfferTechnology;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-
-import java.util.Set;
-
 public class TechnologyDTO {
 
     private String name;

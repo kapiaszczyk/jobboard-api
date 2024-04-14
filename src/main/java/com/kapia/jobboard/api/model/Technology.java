@@ -2,7 +2,6 @@ package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import jakarta.annotation.Generated;
 import jakarta.persistence.*;
 
 import java.util.Arrays;
