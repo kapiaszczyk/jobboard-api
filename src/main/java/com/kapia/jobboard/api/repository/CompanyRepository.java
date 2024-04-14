@@ -15,4 +15,8 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
     List<Company> findAll();
 
     Optional<Company> findByName(String name);
+
+    @Query("SELECT c FROM company c LEFT JOIN FETCH c.addresses WHERE c.id = :id")
+    Optional<Company> findById(long id);
+
 }

@@ -1,9 +1,10 @@
 package com.kapia.jobboard.api.service;
 
 import com.kapia.jobboard.api.dto.CompanyAddressDTO;
+import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
+import com.kapia.jobboard.api.mapper.CompanyMappper;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
-import com.kapia.jobboard.api.model.JobOffer;
 import com.kapia.jobboard.api.repository.CompanyRepository;
 import com.kapia.jobboard.api.repository.JobOfferRepository;
 import jakarta.transaction.Transactional;
@@ -21,10 +22,13 @@ public class CompanyService {
 
     private final JobOfferRepository jobOfferRepository;
 
+    private final CompanyMappper companyMappper;
+
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository) {
+    public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository, CompanyMappper companyMappper) {
         this.companyRepository = companyRepository;
         this.jobOfferRepository = jobOfferRepository;
+        this.companyMappper = companyMappper;
     }
 
     public List<Company> findAll() {
@@ -62,4 +66,12 @@ public class CompanyService {
         jobOfferRepository.deleteByCompanyId(id);
         companyRepository.deleteById(id);
     }
+
+    @Transactional
+    public Company update(CompanyUpdateDTO dto, long id) {
+        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+        companyToUpdate = companyMappper.updateCompanyFromDto(dto, companyToUpdate);
+        return companyRepository.save(companyToUpdate);
+    }
+
 }

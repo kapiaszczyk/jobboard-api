@@ -1,6 +1,7 @@
 package com.kapia.jobboard.api.controller;
 
 import com.kapia.jobboard.api.dto.CompanyAddressDTO;
+import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +46,11 @@ public class CompanyController {
     public ResponseEntity<?> deleteCompany(@PathVariable(value = "id") long id) {
         companyService.deleteCompany(id);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCompany(@PathVariable(value = "id") long id, @RequestBody CompanyUpdateDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyService.update(dto, id));
     }
 
 }
