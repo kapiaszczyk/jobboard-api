@@ -1,5 +1,6 @@
 package com.kapia.jobboard.api.controller;
 
+import com.kapia.jobboard.api.dto.TechnologyDTO;
 import com.kapia.jobboard.api.model.Technology;
 import com.kapia.jobboard.api.service.TechnologyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class TechnologyController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody List<Technology> technologies) {
         return ResponseEntity.status(HttpStatus.CREATED).body(technologyService.create(technologies));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody TechnologyDTO technologyDTO, @PathVariable(value = "id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(technologyService.update(technologyDTO, id));
     }
 
 }
