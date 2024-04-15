@@ -16,7 +16,11 @@ public class JobOfferSpecifications {
         return Specification.where(nameContains(criteria.getName()))
                 .and(companyNameContains(criteria.getCompanyName()))
                 .and(locationContains(criteria.getLocation()))
-                .and(technologiesIn(criteria.getTechnologies()));
+                .and(technologiesIn(criteria.getTechnologies()))
+                .and(operatingModeIs(criteria.getOperatingMode()))
+                .and(contractTypeIs(criteria.getContractType()))
+                .and(experienceIs(criteria.getExperience()))
+                .and(salaryIsBetween(criteria.getSalaryMin(), criteria.getSalaryMax()));
     }
 
     public static Specification<JobOffer> nameContains(Optional<String> name) {
@@ -35,7 +39,7 @@ public class JobOfferSpecifications {
     public static Specification<JobOffer> locationContains(Optional<String> location) {
         return (root, query, builder) -> {
             root.fetch("address", JoinType.LEFT);
-            return location.map(l -> builder.like(root.get("address").get("city"), "%" + l + "%")).orElse(null);
+            return location.map(l -> builder.equal(root.get("address").get("city"), l)).orElse(null);
         };
     }
 
@@ -47,6 +51,47 @@ public class JobOfferSpecifications {
             root.fetch("technologies", JoinType.LEFT).fetch("technology", JoinType.LEFT);
             return root.get("technologies").get("technology").get("name").in(technologies);
 
+        };
+    }
+
+    public static Specification<JobOffer> operatingModeIs(Set<String> operatingMode) {
+        if (CollectionUtils.isEmpty(operatingMode)) {
+            return null;
+        }
+        return (root, query, builder) -> {
+            return root.get("operatingMode").in(operatingMode);
+        };
+    }
+
+    public static Specification<JobOffer> contractTypeIs(Set<String> contractType) {
+        if (CollectionUtils.isEmpty(contractType)) {
+            return null;
+        }
+        return (root, query, builder) -> {
+            return root.get("contractType").in(contractType);
+        };
+    }
+
+    public static Specification<JobOffer> experienceIs(Set<String> experience) {
+        if (CollectionUtils.isEmpty(experience)) {
+            return null;
+        }
+        return (root, query, builder) -> {
+            return root.get("experience").in(experience);
+        };
+    }
+
+    public static Specification<JobOffer> salaryIsBetween(Optional<Integer> salaryMin, Optional<Integer> salaryMax) {
+        return (root, query, builder) -> {
+            if (salaryMin.isPresent() && salaryMax.isPresent()) {
+                return builder.between(root.get("salary"), salaryMin.get(), salaryMax.get());
+            } else if (salaryMin.isPresent()) {
+                return builder.greaterThanOrEqualTo(root.get("salary"), salaryMin.get());
+            } else if (salaryMax.isPresent()) {
+                return builder.lessThanOrEqualTo(root.get("salary"), salaryMax.get());
+            } else {
+                return null;
+            }
         };
     }
 
