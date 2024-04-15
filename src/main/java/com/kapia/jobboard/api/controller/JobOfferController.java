@@ -74,8 +74,6 @@ public class JobOfferController {
                 .technologies(technologies)
                 .build();
 
-        System.out.println(jobOfferSearchCriteria.toString());
-
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findJobOfferByCriteria(jobOfferSearchCriteria));
 
     }

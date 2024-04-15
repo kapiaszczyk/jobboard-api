@@ -53,6 +53,7 @@ public class JobOfferService {
         return jobOfferRepository.findJobOfferByName(name);
     }
 
+    // TODO(fix): Not all criteria work -> fix location, company name and check if technologies work
     public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
         return jobOfferRepository.findAll(specification);
