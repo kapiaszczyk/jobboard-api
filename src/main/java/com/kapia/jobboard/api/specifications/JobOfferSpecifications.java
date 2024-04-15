@@ -1,8 +1,8 @@
 package com.kapia.jobboard.api.specifications;
 
-import com.kapia.jobboard.api.model.*;
+import com.kapia.jobboard.api.model.JobOffer;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
-import jakarta.persistence.criteria.Join;
+import jakarta.persistence.criteria.JoinType;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
 
@@ -27,15 +27,15 @@ public class JobOfferSpecifications {
 
     public static Specification<JobOffer> companyNameContains(Optional<String> companyName) {
         return (root, query, builder) -> {
+            root.fetch("company", JoinType.LEFT).fetch("addresses", JoinType.LEFT);
             return companyName.map(cn -> builder.like(root.get("company").get("name"), "%" + cn + "%")).orElse(null);
         };
     }
 
     public static Specification<JobOffer> locationContains(Optional<String> location) {
         return (root, query, builder) -> {
-            Join<JobOffer, Company> companyJoin = root.join("company");
-            Join<Company, Address> addressJoin = companyJoin.join("addresses");
-            return location.map(l -> builder.like(addressJoin.get("location"), "%" + l + "%")).orElse(null);
+            root.fetch("address", JoinType.LEFT);
+            return location.map(l -> builder.like(root.get("address").get("city"), "%" + l + "%")).orElse(null);
         };
     }
 
@@ -44,9 +44,9 @@ public class JobOfferSpecifications {
             return null;
         }
         return (root, query, builder) -> {
-            Join<JobOffer, JobOfferTechnology> jobTechnologyJoin = root.join("technologies");
-            Join<JobOfferTechnology, Technology> technologyJoin = jobTechnologyJoin.join("technology");
-            return technologyJoin.get("name").in(technologies);
+            root.fetch("technologies", JoinType.LEFT).fetch("technology", JoinType.LEFT);
+            return root.get("technologies").get("technology").get("name").in(technologies);
+
         };
     }
 
