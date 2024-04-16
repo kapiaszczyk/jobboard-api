@@ -5,10 +5,6 @@ import com.kapia.jobboard.api.service.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -47,16 +43,19 @@ public class JobOfferController {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findDetailedProjectedById(id));
     }
 
-    // Get job offer by id
     @GetMapping("/{id}")
-    public ResponseEntity<?> getJobOfferById(Long id) {
+    public ResponseEntity<?> getJobOfferById(@PathVariable(value = "id") Long id) {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findJobOfferById(id));
     }
 
-    // Get job offer by name
-    @GetMapping("/{name}")
-    public ResponseEntity<?> getJobOfferByName(String name) {
-        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findJobOfferByName(name));
+    @PostMapping
+    public ResponseEntity<?> addJobOffer(@RequestBody JobOfferRequest jobOfferRequest) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(jobOfferService.add(jobOfferRequest));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateJobOffer(@PathVariable Long id, @RequestBody JobOfferRequest jobOfferRequest) {
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.update(jobOfferRequest, id));
     }
 
     @DeleteMapping("/{id}")

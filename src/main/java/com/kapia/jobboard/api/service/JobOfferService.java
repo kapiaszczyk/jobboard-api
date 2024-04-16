@@ -1,11 +1,9 @@
 package com.kapia.jobboard.api.service;
 
-import com.kapia.jobboard.api.model.JobOffer;
-import com.kapia.jobboard.api.projections.JobOfferBasicView;
-import com.kapia.jobboard.api.projections.JobOfferDetailedView;
-import com.kapia.jobboard.api.repository.JobOfferRepository;
 import com.kapia.jobboard.api.model.*;
 import com.kapia.jobboard.api.payload.JobOfferRequest;
+import com.kapia.jobboard.api.projections.JobOfferBasicView;
+import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,8 +43,20 @@ public class JobOfferService {
         return jobOfferRepository.findAll();
     }
 
-    public List<JobOfferBasicView> findAllProjectedBy() {
-        return jobOfferRepository.findAllProjectedBy();
+    public List<JobOfferBasicView> findAllBasicProjectedBy() {
+        return jobOfferRepository.findAllBasicProjectedBy();
+    }
+
+    public Optional<JobOfferBasicView> findBasicProjectedById(Long id) {
+        return jobOfferRepository.findBasicProjectedById(id);
+    }
+
+    public List<JobOfferDetailedView> findAllDetailedProjectedBy() {
+        return jobOfferRepository.findAllDetailedProjectedBy();
+    }
+
+    public Optional<JobOfferDetailedView> findDetailedProjectedById(Long id) {
+        return jobOfferRepository.findDetailedProjectedById(id);
     }
 
     public List<JobOffer> findJobOfferByName(String name) {
@@ -139,7 +149,7 @@ public class JobOfferService {
                 existingJobOfferTechnology.setDegreeOfKnowledge(degreeOfKnowledge);
             } else {
                 Technology technology = technologyMap.get(technologyId);
-                JobOfferTechnology newJobOfferTechnology = new JobOfferTechnology(jobOfferToUpdate, technology, degreeOfKnowledge);
+                JobOfferTechnology newJobOfferTechnology = new JobOfferTechnology(new JobOfferTechnologyKey(jobOfferToUpdate.getId(), technology.getId()), jobOfferToUpdate, technology, degreeOfKnowledge);
                 jobOfferTechnologies.add(newJobOfferTechnology);
             }
         }

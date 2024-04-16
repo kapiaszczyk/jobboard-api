@@ -21,6 +21,13 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long> {
             "LEFT JOIN FETCH j.company.addresses")
     List<JobOffer> findAll();
 
+    @Query("SELECT DISTINCT j FROM job_offer j " +
+            "LEFT JOIN FETCH j.company " +
+            "LEFT JOIN FETCH j.technologies " +
+            "LEFT JOIN FETCH j.company.addresses " +
+            "WHERE j.id = :id")
+    Optional<JobOffer> findById(Long id);
+
     List<JobOfferBasicView> findAllBasicProjectedBy();
 
     Optional<JobOfferBasicView> findBasicProjectedById(Long id);
