@@ -6,6 +6,7 @@ import com.kapia.jobboard.api.projections.JobOfferBasicView;
 import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -163,5 +164,20 @@ public class JobOfferService {
     public void deleteById(long id) {
         jobOfferRepository.deleteById(id);
     }
+
+    public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+        return jobOfferRepository.findAll(specification);
+    }
+
+    public List<JobOfferDetailedView> getJobOfferByCriteriaProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+        return jobOfferRepository.findBy(specification, q -> q
+                .project("name", "company.name", "address.city", "technologies.technology.name", "operatingMode", "contractType", "experience", "salary", "salaryCurrency")
+                .as(JobOfferDetailedView.class)
+                .all()
+        );
+    }
+}
 
 }
