@@ -1,12 +1,15 @@
 package com.kapia.jobboard.api.controller;
 
+import com.kapia.jobboard.api.dto.CompanyAddressDTO;
+import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
+import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/company")
@@ -27,6 +30,27 @@ public class CompanyController {
     @GetMapping("/name")
     public ResponseEntity<?> getCompanyByName(String name) {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.findByName(name));
+    }
+
+    @PostMapping
+    public ResponseEntity<?> addCompany(@RequestBody CompanyAddressDTO companyAddressDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(companyService.add(companyAddressDTO));
+    }
+
+    @PostMapping("{id}/addresses")
+    public ResponseEntity<?> updateAddresses(@RequestBody Set<Address> addresses, @PathVariable(name = "id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyService.updateAddresses(addresses, id));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCompany(@PathVariable(value = "id") long id) {
+        companyService.deleteCompany(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCompany(@PathVariable(value = "id") long id, @RequestBody CompanyUpdateDTO dto) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyService.update(dto, id));
     }
 
 }

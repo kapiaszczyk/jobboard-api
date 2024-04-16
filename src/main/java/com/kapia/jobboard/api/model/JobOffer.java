@@ -95,6 +95,23 @@ public class JobOffer {
     public JobOffer() {
     }
 
+    public JobOffer(String name, String shortDescription, String description, String contractType, int salary,
+                    String salaryCurrency, SalaryType salaryType, String experience, OperatingMode operatingMode,
+                    Date expiresAt, Address address, Company company) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.contractType = contractType;
+        this.salary = salary;
+        this.salaryCurrency = salaryCurrency;
+        this.salaryType = salaryType;
+        this.experience = experience;
+        this.operatingMode = operatingMode;
+        this.expiresAt = expiresAt;
+        this.address = address;
+        this.company = company;
+    }
+
     public JobOffer(Long id, String name, String shortDescription, String description, String contractType, int salary, String salaryCurrency, SalaryType salaryType, String experience, OperatingMode operatingMode, Date createdAt, Date updatedAt, Date expiresAt, Address address, Company company, Set<JobOfferTechnology> technologies) {
         this.id = id;
         this.name = name;
@@ -240,6 +257,17 @@ public class JobOffer {
 
     public void setTechnologies(Set<JobOfferTechnology> technologies) {
         this.technologies = technologies;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        this.createdAt = new Date();
+        this.updatedAt = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        this.updatedAt = new Date();
     }
 
     public enum SalaryType {

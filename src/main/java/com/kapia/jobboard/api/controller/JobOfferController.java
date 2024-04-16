@@ -1,5 +1,6 @@
 package com.kapia.jobboard.api.controller;
 
+import com.kapia.jobboard.api.payload.JobOfferRequest;
 import com.kapia.jobboard.api.service.JobOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/job-offer")
@@ -57,4 +59,9 @@ public class JobOfferController {
         return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.findJobOfferByName(name));
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteJobOffer(@PathVariable Long id) {
+        jobOfferService.deleteById(id);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }

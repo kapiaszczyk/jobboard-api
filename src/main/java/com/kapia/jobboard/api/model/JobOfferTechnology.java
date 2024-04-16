@@ -28,6 +28,12 @@ public class JobOfferTechnology {
     public JobOfferTechnology() {
     }
 
+    public JobOfferTechnology( JobOffer jobOffer, Technology technology, String degreeOfKnowledge) {
+        this.jobOffer = jobOffer;
+        this.technology = technology;
+        this.degreeOfKnowledge = degreeOfKnowledge;
+    }
+
     public JobOfferTechnology(JobOfferTechnologyKey id, JobOffer jobOffer, Technology technology, String degreeOfKnowledge) {
         this.id = id;
         this.jobOffer = jobOffer;
