@@ -83,5 +83,36 @@ public class JobOfferController {
 
     }
 
+    @GetMapping("/criteria-view")
+    public ResponseEntity<?> getJobOfferByCriteriaProjectedBy(
+
+            @RequestParam(required = false) Optional<String> name,
+            @RequestParam(required = false) Optional<String> company_name,
+            @RequestParam(required = false) Optional<String> location,
+            @RequestParam(required = false) Set<String> technologies,
+            @RequestParam(required = false) Set<String> operating_mode,
+            @RequestParam(required = false) Set<String> contract_type,
+            @RequestParam(required = false) Set<String> experience,
+            @RequestParam(required = false) Optional<Integer> salary_min,
+            @RequestParam(required = false) Optional<Integer> salary_max
+
+    ) {
+
+        JobOfferSearchCriteria jobOfferSearchCriteria = JobOfferSearchCriteria.builder()
+                .name(name)
+                .companyName(company_name)
+                .location(location)
+                .technologies(technologies)
+                .operatingMode(operating_mode)
+                .contractType(contract_type)
+                .experience(experience)
+                .salaryMin(salary_min)
+                .salaryMax(salary_max)
+                .build();
+
+        return ResponseEntity.status(HttpStatus.OK).body(jobOfferService.getJobOfferByCriteriaProjectedBy(jobOfferSearchCriteria));
+
+    }
+
 
 }

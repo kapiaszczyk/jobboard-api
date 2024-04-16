@@ -58,4 +58,12 @@ public class JobOfferService {
         return jobOfferRepository.findAll(specification);
     }
 
+    public List<JobOfferDetailedView> getJobOfferByCriteriaProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+        return jobOfferRepository.findBy(specification, q -> q
+                .project("name", "company.name", "address.city", "technologies.technology.name", "operatingMode", "contractType", "experience", "salary", "salaryCurrency")
+                .as(JobOfferDetailedView.class)
+                .all()
+        );
+    }
 }

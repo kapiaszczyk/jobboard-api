@@ -17,9 +17,9 @@ public class JobOfferSpecifications {
                 .and(companyNameContains(criteria.getCompanyName()))
                 .and(locationContains(criteria.getLocation()))
                 .and(technologiesIn(criteria.getTechnologies()))
-                .and(operatingModeIs(criteria.getOperatingMode()))
-                .and(contractTypeIs(criteria.getContractType()))
-                .and(experienceIs(criteria.getExperience()))
+                .and(operatingModeIn(criteria.getOperatingMode()))
+                .and(contractTypeIn(criteria.getContractType()))
+                .and(experienceIn(criteria.getExperience()))
                 .and(salaryIsBetween(criteria.getSalaryMin(), criteria.getSalaryMax()));
     }
 
@@ -54,16 +54,16 @@ public class JobOfferSpecifications {
         };
     }
 
-    public static Specification<JobOffer> operatingModeIs(Set<String> operatingMode) {
-        if (CollectionUtils.isEmpty(operatingMode)) {
+    public static Specification<JobOffer> operatingModeIn(Set<String> operatingModes) {
+        if (CollectionUtils.isEmpty(operatingModes)) {
             return null;
         }
         return (root, query, builder) -> {
-            return root.get("operatingMode").in(operatingMode);
+            return root.get("operatingMode").in(operatingModes);
         };
     }
 
-    public static Specification<JobOffer> contractTypeIs(Set<String> contractType) {
+    public static Specification<JobOffer> contractTypeIn(Set<String> contractType) {
         if (CollectionUtils.isEmpty(contractType)) {
             return null;
         }
@@ -72,7 +72,7 @@ public class JobOfferSpecifications {
         };
     }
 
-    public static Specification<JobOffer> experienceIs(Set<String> experience) {
+    public static Specification<JobOffer> experienceIn(Set<String> experience) {
         if (CollectionUtils.isEmpty(experience)) {
             return null;
         }

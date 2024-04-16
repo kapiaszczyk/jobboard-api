@@ -165,4 +165,18 @@ public class JobOfferSearchCriteria {
 
     }
 
+    @Override
+    public String toString() {
+        return "JobOfferSearchCriteria{" +
+                "name=" + name +
+                ", companyName=" + companyName +
+                ", location=" + location +
+                ", technologies=" + technologies +
+                ", operatingMode=" + operatingMode +
+                ", contractType=" + contractType +
+                ", experience=" + experience +
+                ", salaryMin=" + salaryMin +
+                ", salaryMax=" + salaryMax +
+                '}';
+    }
 }
