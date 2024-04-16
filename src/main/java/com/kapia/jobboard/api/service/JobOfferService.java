@@ -66,6 +66,7 @@ public class JobOfferService {
         return jobOfferRepository.findJobOfferByName(name);
     }
 
+
     /*
      * Optimisation candidate (generates too many queries to the DB!)
      */
