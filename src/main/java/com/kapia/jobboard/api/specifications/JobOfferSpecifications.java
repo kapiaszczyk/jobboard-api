@@ -31,14 +31,18 @@ public class JobOfferSpecifications {
 
     public static Specification<JobOffer> companyNameContains(Optional<String> companyName) {
         return (root, query, builder) -> {
-            root.fetch("company", JoinType.LEFT).fetch("addresses", JoinType.LEFT);
+            if (query.getResultType() != Long.class && query.getResultType() != long.class) {
+                root.fetch("company", JoinType.LEFT).fetch("addresses", JoinType.LEFT);
+            }
             return companyName.map(cn -> builder.like(root.get("company").get("name"), "%" + cn + "%")).orElse(null);
         };
     }
 
     public static Specification<JobOffer> locationContains(Optional<String> location) {
         return (root, query, builder) -> {
-            root.fetch("address", JoinType.LEFT);
+            if (query.getResultType() != Long.class && query.getResultType() != long.class) {
+                root.fetch("address", JoinType.LEFT);
+            }
             return location.map(l -> builder.equal(root.get("address").get("city"), l)).orElse(null);
         };
     }
@@ -48,9 +52,10 @@ public class JobOfferSpecifications {
             return null;
         }
         return (root, query, builder) -> {
-            root.fetch("technologies", JoinType.LEFT).fetch("technology", JoinType.LEFT);
+            if (query.getResultType() != Long.class && query.getResultType() != long.class) {
+                root.fetch("technologies", JoinType.LEFT).fetch("technology", JoinType.LEFT);
+            }
             return root.get("technologies").get("technology").get("name").in(technologies);
-
         };
     }
 

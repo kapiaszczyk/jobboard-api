@@ -6,8 +6,13 @@ import com.kapia.jobboard.api.projections.JobOfferBasicView;
 import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.*;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
+import com.kapia.jobboard.api.sorting.SortingCriteria;
+import com.kapia.jobboard.api.sorting.SortingOrder;
 import com.kapia.jobboard.api.specifications.JobOfferSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +21,8 @@ import java.util.stream.Collectors;
 
 @Service
 public class JobOfferService {
+
+    private static final int MAX_PAGE_SIZE = 25;
 
     private final JobOfferRepository jobOfferRepository;
 
@@ -180,6 +187,52 @@ public class JobOfferService {
                 .as(JobOfferDetailedView.class)
                 .all()
         );
+    }
+
+    public List<JobOffer> findJobOfferByCriteriaPageAndSortByCreatedAtAsc(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber, String sortingCriteria, String sortingOrder) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+
+        if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
+        Sort sort = resolveSorting(sortingCriteria, sortingOrder);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        return jobOfferRepository.findAll(specification, pageable).stream().toList();
+    }
+
+    public List<JobOfferDetailedView> findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber, String sortingCriteria, String sortingOrder) {
+        Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
+
+        if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
+        Sort sort = resolveSorting(sortingCriteria, sortingOrder);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+
+        return jobOfferRepository.findBy(specification, q -> q
+                .project("name", "company.name", "address.city", "technologies.technology.name", "operatingMode", "contractType", "experience", "salary", "salaryCurrency")
+                .as(JobOfferDetailedView.class)
+                .page(pageable)
+        ).stream().toList();
+    }
+
+    private Sort resolveSorting(String sortBy, String sortDirection) {
+        String field = resolveSortingCriteria(sortBy);
+        String order = resolveSortingOrder(sortDirection);
+        return Sort.by(Sort.Order.by(field).with(Sort.Direction.fromString(order)));
+    }
+
+    private String resolveSortingCriteria(String sortBy) {
+        try {
+            return SortingCriteria.fromString(sortBy.toUpperCase()).toString();
+        } catch (IllegalArgumentException e) {
+            return SortingCriteria.createdAt.toString();
+        }
+    }
+
+    private String resolveSortingOrder(String sortDirection) {
+        try {
+            return SortingOrder.fromString(sortDirection.toUpperCase()).toString();
+        } catch (IllegalArgumentException e) {
+            return SortingOrder.ASC.toString();
+        }
     }
 
 }

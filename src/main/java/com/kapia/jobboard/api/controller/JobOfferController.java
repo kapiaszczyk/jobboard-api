@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 import java.util.Set;
@@ -125,6 +124,90 @@ public class JobOfferController {
 
     }
 
+    @GetMapping("/criteria-page")
+    public ResponseEntity<?> getJobOfferByCriteriaPageAndSortByCreatedAtAsc(
+
+            @RequestParam(required = false) Optional<String> name,
+            @RequestParam(required = false) Optional<String> company_name,
+            @RequestParam(required = false) Optional<String> location,
+            @RequestParam(required = false) Set<String> technologies,
+            @RequestParam(required = false) Set<String> operating_mode,
+            @RequestParam(required = false) Set<String> contract_type,
+            @RequestParam(required = false) Set<String> experience,
+            @RequestParam(required = false) Optional<Integer> salary_min,
+            @RequestParam(required = false) Optional<Integer> salary_max,
+            @RequestParam(required = false) Optional<Integer> page_size,
+            @RequestParam(required = false) Optional<Integer> page_number,
+            @RequestParam(required = false) Optional<String> sort_by,
+            @RequestParam(required = false) Optional<String> sort_direction
+
+    ) {
+
+        JobOfferSearchCriteria jobOfferSearchCriteria = JobOfferSearchCriteria.builder()
+                .name(name)
+                .companyName(company_name)
+                .location(location)
+                .technologies(technologies)
+                .operatingMode(operating_mode)
+                .contractType(contract_type)
+                .experience(experience)
+                .salaryMin(salary_min)
+                .salaryMax(salary_max)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(jobOfferService.findJobOfferByCriteriaPageAndSortByCreatedAtAsc(
+                        jobOfferSearchCriteria,
+                        page_size.orElse(10),
+                        page_number.orElse(0),
+                        sort_by.orElse("createdAt"),
+                        sort_direction.orElse("asc")
+                ));
+
+    }
+
+    @GetMapping("/criteria-view-page")
+    public ResponseEntity<?> getJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(
+
+            @RequestParam(required = false) Optional<String> name,
+            @RequestParam(required = false) Optional<String> company_name,
+            @RequestParam(required = false) Optional<String> location,
+            @RequestParam(required = false) Set<String> technologies,
+            @RequestParam(required = false) Set<String> operating_mode,
+            @RequestParam(required = false) Set<String> contract_type,
+            @RequestParam(required = false) Set<String> experience,
+            @RequestParam(required = false) Optional<Integer> salary_min,
+            @RequestParam(required = false) Optional<Integer> salary_max,
+            @RequestParam(required = false) Optional<Integer> page_size,
+            @RequestParam(required = false) Optional<Integer> page_number,
+            @RequestParam(required = false) Optional<String> sort_by,
+            @RequestParam(required = false) Optional<String> sort_direction
+
+    ) {
+
+        JobOfferSearchCriteria jobOfferSearchCriteria = JobOfferSearchCriteria.builder()
+                .name(name)
+                .companyName(company_name)
+                .location(location)
+                .technologies(technologies)
+                .operatingMode(operating_mode)
+                .contractType(contract_type)
+                .experience(experience)
+                .salaryMin(salary_min)
+                .salaryMax(salary_max)
+                .build();
+
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(jobOfferService.findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(
+                        jobOfferSearchCriteria,
+                        page_size.orElse(10),
+                        page_number.orElse(0),
+                        sort_by.orElse("createdAt"),
+                        sort_direction.orElse("asc")
+                ));
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteJobOffer(@PathVariable Long id) {

@@ -3,13 +3,11 @@ package com.kapia.jobboard.api.repository;
 import com.kapia.jobboard.api.model.JobOffer;
 import com.kapia.jobboard.api.projections.JobOfferBasicView;
 import com.kapia.jobboard.api.projections.JobOfferDetailedView;
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.data.jpa.repository.EntityGraph;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -72,5 +70,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
 
     @EntityGraph(attributePaths = {"company", "technologies", "company.addresses"})
     List<JobOffer> findAll(Specification<JobOffer> specification);
+
+    @EntityGraph(attributePaths = {"company", "technologies", "company.addresses"})
+    Page<JobOffer> findAll(Specification<JobOffer> specification, Pageable pageable);
 
 }
