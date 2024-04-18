@@ -199,12 +199,11 @@ public class JobOfferService {
         return jobOfferRepository.findAll(specification, pageable).stream().toList();
     }
 
-    public List<JobOfferDetailedView> findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber, String sortingCriteria, String sortingOrder) {
+    public List<JobOfferDetailedView> findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
 
         if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
-        Sort sort = resolveSorting(sortingCriteria, sortingOrder);
-        Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         return jobOfferRepository.findBy(specification, q -> q
                 .project("name", "company.name", "address.city", "technologies.technology.name", "operatingMode", "contractType", "experience", "salary", "salaryCurrency")
@@ -223,7 +222,7 @@ public class JobOfferService {
         try {
             return SortingCriteria.fromString(sortBy.toUpperCase()).toString();
         } catch (IllegalArgumentException e) {
-            return SortingCriteria.createdAt.toString();
+            return SortingCriteria.CREATED_AT.toString();
         }
     }
 

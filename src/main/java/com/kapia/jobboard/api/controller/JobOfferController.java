@@ -3,6 +3,8 @@ package com.kapia.jobboard.api.controller;
 import com.kapia.jobboard.api.payload.JobOfferRequest;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
 import com.kapia.jobboard.api.service.JobOfferService;
+import com.kapia.jobboard.api.sorting.SortingCriteria;
+import com.kapia.jobboard.api.sorting.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -161,8 +163,8 @@ public class JobOfferController {
                         jobOfferSearchCriteria,
                         page_size.orElse(10),
                         page_number.orElse(0),
-                        sort_by.orElse("createdAt"),
-                        sort_direction.orElse("asc")
+                        sort_by.orElse(SortingCriteria.CREATED_AT.toString()),
+                        sort_direction.orElse(SortingOrder.ASC.toString())
                 ));
 
     }
@@ -180,9 +182,7 @@ public class JobOfferController {
             @RequestParam(required = false) Optional<Integer> salary_min,
             @RequestParam(required = false) Optional<Integer> salary_max,
             @RequestParam(required = false) Optional<Integer> page_size,
-            @RequestParam(required = false) Optional<Integer> page_number,
-            @RequestParam(required = false) Optional<String> sort_by,
-            @RequestParam(required = false) Optional<String> sort_direction
+            @RequestParam(required = false) Optional<Integer> page_number
 
     ) {
 
@@ -203,9 +203,7 @@ public class JobOfferController {
                 .body(jobOfferService.findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(
                         jobOfferSearchCriteria,
                         page_size.orElse(10),
-                        page_number.orElse(0),
-                        sort_by.orElse("createdAt"),
-                        sort_direction.orElse("asc")
+                        page_number.orElse(0)
                 ));
     }
 
