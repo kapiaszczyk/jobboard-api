@@ -10,6 +10,8 @@ import com.kapia.jobboard.api.sorting.SortingCriteria;
 import com.kapia.jobboard.api.sorting.SortingOrder;
 import com.kapia.jobboard.api.specifications.JobOfferSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -24,6 +26,8 @@ public class JobOfferService {
 
     private static final int MAX_PAGE_SIZE = 25;
 
+    private CacheManager cacheManager;
+
     private final JobOfferRepository jobOfferRepository;
 
     private final CompanyRepository companyRepository;
@@ -37,14 +41,16 @@ public class JobOfferService {
     @Autowired
     public JobOfferService(JobOfferRepository jobOfferRepository, CompanyRepository companyRepository,
                            AddressRepository addressRepository, TechnologyRepository technologyRepository,
-                           JobOfferTechnologyRepository jobOfferTechnologyRepository) {
+                           JobOfferTechnologyRepository jobOfferTechnologyRepository, CacheManager cacheManager) {
         this.jobOfferRepository = jobOfferRepository;
         this.companyRepository = companyRepository;
         this.addressRepository = addressRepository;
         this.technologyRepository = technologyRepository;
         this.jobOfferTechnologyRepository = jobOfferTechnologyRepository;
+        this.cacheManager = cacheManager;
     }
 
+    @Cacheable(cacheNames = "job_offers", key = "#id")
     public Optional<JobOffer> findJobOfferById(Long id) {
         return jobOfferRepository.findById(id);
     }
@@ -53,18 +59,22 @@ public class JobOfferService {
         return jobOfferRepository.findAll();
     }
 
+    @Cacheable(cacheNames = "job_offers_basic_view", key = "'findAllBasicProjectedBy'")
     public List<JobOfferBasicView> findAllBasicProjectedBy() {
         return jobOfferRepository.findAllBasicProjectedBy();
     }
 
+    @Cacheable(cacheNames = "job_offers_basic_view", key = "#id")
     public Optional<JobOfferBasicView> findBasicProjectedById(Long id) {
         return jobOfferRepository.findBasicProjectedById(id);
     }
 
+    @Cacheable(cacheNames = "job_offers_detailed_view", key = "'findAllDetailedProjectedBy'")
     public List<JobOfferDetailedView> findAllDetailedProjectedBy() {
         return jobOfferRepository.findAllDetailedProjectedBy();
     }
 
+    @Cacheable(cacheNames = "job_offers_detailed_view", key = "#id")
     public Optional<JobOfferDetailedView> findDetailedProjectedById(Long id) {
         return jobOfferRepository.findDetailedProjectedById(id);
     }

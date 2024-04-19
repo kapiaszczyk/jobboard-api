@@ -19,7 +19,8 @@ public interface JobOfferRepository extends JpaRepository<JobOffer, Long>, JpaSp
     @Query("SELECT DISTINCT j FROM job_offer j " +
             "LEFT JOIN FETCH j.company " +
             "LEFT JOIN FETCH j.technologies " +
-            "LEFT JOIN FETCH j.company.addresses")
+            "LEFT JOIN FETCH j.company.addresses " +
+            "LEFT JOIN FETCH j.address ")
     List<JobOffer> findAll();
 
     @Query("SELECT DISTINCT j FROM job_offer j " +
