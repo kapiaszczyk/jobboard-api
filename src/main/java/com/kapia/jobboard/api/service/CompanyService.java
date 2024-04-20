@@ -1,7 +1,9 @@
 package com.kapia.jobboard.api.service;
 
+import com.kapia.jobboard.api.constants.Messages;
 import com.kapia.jobboard.api.dto.CompanyAddressDTO;
 import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
+import com.kapia.jobboard.api.exception.ResourceNotFoundException;
 import com.kapia.jobboard.api.mapper.CompanyMappper;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
@@ -52,7 +54,7 @@ public class CompanyService {
 
     @Transactional
     public Company updateAddresses(Set<Address> addresses, long id) {
-        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
 
         companyToUpdate.addAddresses(addresses);
 
@@ -62,14 +64,15 @@ public class CompanyService {
     }
 
     public void deleteCompany(long id) {
+        Company company = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
         jobOfferRepository.deleteJobOfferTechnologiesByCompanyId(id);
         jobOfferRepository.deleteByCompanyId(id);
-        companyRepository.deleteById(id);
+        companyRepository.delete(company);
     }
 
     @Transactional
     public Company update(CompanyUpdateDTO dto, long id) {
-        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new RuntimeException("Company not found"));
+        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
         companyToUpdate = companyMappper.updateCompanyFromDto(dto, companyToUpdate);
         return companyRepository.save(companyToUpdate);
     }

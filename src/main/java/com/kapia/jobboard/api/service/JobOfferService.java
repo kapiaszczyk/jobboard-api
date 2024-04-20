@@ -1,8 +1,7 @@
 package com.kapia.jobboard.api.service;
 
-import com.kapia.jobboard.api.constants.DegreeOfKnowledge;
-import com.kapia.jobboard.api.constants.SortingCriteria;
-import com.kapia.jobboard.api.constants.SortingOrder;
+import com.kapia.jobboard.api.constants.*;
+import com.kapia.jobboard.api.exception.ResourceNotFoundException;
 import com.kapia.jobboard.api.model.*;
 import com.kapia.jobboard.api.payload.JobOfferRequest;
 import com.kapia.jobboard.api.projections.JobOfferBasicView;
@@ -26,9 +25,7 @@ import java.util.stream.Collectors;
 @Service
 public class JobOfferService {
 
-    private static final int MAX_PAGE_SIZE = 25;
-
-    private CacheManager cacheManager;
+    private final CacheManager cacheManager;
 
     private final JobOfferRepository jobOfferRepository;
 
@@ -93,7 +90,7 @@ public class JobOfferService {
     public Optional<JobOfferBasicView> add(JobOfferRequest jobOfferRequest) {
 
         Company company = companyRepository.findById(jobOfferRequest.getCompanyId())
-                .orElseThrow(() -> new RuntimeException("Company not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Company not found"));
 
         Address address = addressRepository.findById(jobOfferRequest.getAddressId())
                 .orElseThrow(() -> new RuntimeException("Address not found"));
@@ -134,7 +131,7 @@ public class JobOfferService {
      */
     @Transactional
     public JobOffer update(JobOfferRequest jobOfferRequest, Long id) {
-        JobOffer jobOfferToUpdate = jobOfferRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid id"));
+        JobOffer jobOfferToUpdate = jobOfferRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
 
         jobOfferToUpdate.setName(jobOfferRequest.getName());
         jobOfferToUpdate.setShortDescription(jobOfferRequest.getShortDescription());
@@ -186,7 +183,8 @@ public class JobOfferService {
     }
 
     public void deleteById(long id) {
-        jobOfferRepository.deleteById(id);
+        JobOffer jobOffer = jobOfferRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
+        jobOfferRepository.delete(jobOffer);
     }
 
     public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
@@ -206,7 +204,7 @@ public class JobOfferService {
     public List<JobOffer> findJobOfferByCriteriaPageAndSortByCreatedAtAsc(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber, String sortingCriteria, String sortingOrder) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
 
-        if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
+        if (pageSize > Defaults.MAX_PAGE_SIZE) pageSize = Defaults.MAX_PAGE_SIZE;
         Sort sort = resolveSorting(sortingCriteria, sortingOrder);
         Pageable pageable = PageRequest.of(pageNumber, pageSize, sort);
 
@@ -216,7 +214,7 @@ public class JobOfferService {
     public List<JobOfferDetailedView> findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
 
-        if (pageSize > MAX_PAGE_SIZE) pageSize = MAX_PAGE_SIZE;
+        if (pageSize > Defaults.MAX_PAGE_SIZE) pageSize = Defaults.MAX_PAGE_SIZE;
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
 
         return jobOfferRepository.findBy(specification, q -> q

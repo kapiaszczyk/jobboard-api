@@ -1,6 +1,7 @@
 package com.kapia.jobboard.api.service;
 
 import com.kapia.jobboard.api.dto.TechnologyDTO;
+import com.kapia.jobboard.api.exception.ResourceNotFoundException;
 import com.kapia.jobboard.api.mapper.TechnologyMapper;
 import com.kapia.jobboard.api.model.Technology;
 import com.kapia.jobboard.api.repository.TechnologyRepository;
@@ -30,7 +31,7 @@ public class TechnologyService {
     }
 
     public Technology update(TechnologyDTO dto, long id) {
-        Technology technologyToUpdate = technologyRepository.findById(id).orElseThrow(() -> new RuntimeException("Technology not found"));
+        Technology technologyToUpdate = technologyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Technology not found"));
         return technologyRepository.save(mapper.updateTechnologyWithDtoDetails(dto, technologyToUpdate));
     }
 
