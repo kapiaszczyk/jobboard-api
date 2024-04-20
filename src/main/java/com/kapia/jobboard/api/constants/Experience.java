@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-// intern, junior, regular, mid, senior, expert, architect, other
 public enum Experience {
 
     INTERN("intern"),
