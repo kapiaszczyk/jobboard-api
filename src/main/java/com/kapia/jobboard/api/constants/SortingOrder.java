@@ -1,4 +1,4 @@
-package com.kapia.jobboard.api.sorting;
+package com.kapia.jobboard.api.constants;
 
 public enum SortingOrder {
 
@@ -12,7 +12,7 @@ public enum SortingOrder {
             case "DESC":
                 return DESC;
             default:
-                throw new IllegalArgumentException("Unknown sorting order: " + value);
+                throw new IllegalArgumentException("Unknown constants order: " + value);
         }
     }
 

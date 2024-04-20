@@ -2,8 +2,13 @@ package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kapia.jobboard.api.annotation.*;
+import com.kapia.jobboard.api.constants.*;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
 import java.util.Set;
@@ -15,33 +20,66 @@ public class JobOffer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
     @NotNull
+    @Length(min = 10, max = 255)
     private String name;
 
+    @NotBlank
     @NotNull
+    @Length(min = 50, max = 255)
     private String shortDescription;
 
+    @NotBlank
     @NotNull
+    @Length(min = 255, max = 5000)
     private String description;
 
     @NotNull
-    private String contractType;
+    @ContractTypeSubset(anyOf = {
+            ContractType.CONTRACT,
+            ContractType.FULL_TIME,
+            ContractType.INTERNSHIP,
+            ContractType.OTHER,
+            ContractType.PART_TIME,
+            ContractType.TEMPORARY,
+            ContractType.B2B})
+    private ContractType contractType;
 
     @NotNull
+    @Positive
     private int salary;
 
-    @NotNull
+    @CurrencySubset(anyOf = Currencies.VALID_CURRENCIES)
     private String salaryCurrency;
 
+
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @SalaryTypeSubset(anyOf = {
+            SalaryType.ANNUAL,
+            SalaryType.HOURLY,
+            SalaryType.MONTHLY,
+            SalaryType.OTHER})
     private SalaryType salaryType;
 
     @NotNull
-    private String experience;
+    @ExperienceSubset(anyOf = {
+            Experience.INTERN,
+            Experience.JUNIOR,
+            Experience.REGULAR,
+            Experience.MID,
+            Experience.SENIOR,
+            Experience.EXPERT,
+            Experience.ARCHITECT,
+            Experience.OTHER
+    })
+    private Experience experience;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
+    @OperatingModeSubset(anyOf = {
+            OperatingMode.HYBRID,
+            OperatingMode.REMOTE,
+            OperatingMode.ONSITE})
     private OperatingMode operatingMode;
 
     @NotNull
@@ -54,6 +92,7 @@ public class JobOffer {
 
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
+    @FutureDateConstraint
     Date expiresAt;
 
     @ManyToOne
@@ -78,8 +117,8 @@ public class JobOffer {
     public JobOffer() {
     }
 
-    public JobOffer(String name, String shortDescription, String description, String contractType, int salary,
-                    String salaryCurrency, SalaryType salaryType, String experience, OperatingMode operatingMode,
+    public JobOffer(String name, String shortDescription, String description, ContractType contractType, int salary,
+                    String salaryCurrency, SalaryType salaryType, Experience experience, OperatingMode operatingMode,
                     Date expiresAt, Address address, Company company) {
         this.name = name;
         this.shortDescription = shortDescription;
@@ -95,7 +134,7 @@ public class JobOffer {
         this.company = company;
     }
 
-    public JobOffer(Long id, String name, String shortDescription, String description, String contractType, int salary, String salaryCurrency, SalaryType salaryType, String experience, OperatingMode operatingMode, Date createdAt, Date updatedAt, Date expiresAt, Address address, Company company, Set<JobOfferTechnology> technologies) {
+    public JobOffer(Long id, String name, String shortDescription, String description, ContractType contractType, int salary, String salaryCurrency, SalaryType salaryType, Experience experience, OperatingMode operatingMode, Date createdAt, Date updatedAt, Date expiresAt, Address address, Company company, Set<JobOfferTechnology> technologies) {
         this.id = id;
         this.name = name;
         this.shortDescription = shortDescription;
@@ -146,11 +185,11 @@ public class JobOffer {
         this.description = description;
     }
 
-    public String getContractType() {
+    public ContractType getContractType() {
         return contractType;
     }
 
-    public void setContractType(String contractType) {
+    public void setContractType(ContractType contractType) {
         this.contractType = contractType;
     }
 
@@ -178,11 +217,11 @@ public class JobOffer {
         this.salaryType = salaryType;
     }
 
-    public String getExperience() {
+    public Experience getExperience() {
         return experience;
     }
 
-    public void setExperience(String experience) {
+    public void setExperience(Experience experience) {
         this.experience = experience;
     }
 
@@ -253,16 +292,4 @@ public class JobOffer {
         this.updatedAt = new Date();
     }
 
-    public enum SalaryType {
-        hourly,
-        monthly,
-        annual,
-        other
-    }
-
-    public enum OperatingMode {
-        remote,
-        hybrid,
-        onsite
-    }
 }

@@ -2,7 +2,11 @@ package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kapia.jobboard.api.annotation.LogoSizeConstraint;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import org.hibernate.validator.constraints.Length;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -14,10 +18,17 @@ public class Technology {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @NotEmpty
+    @Length(min = 3, max = 255)
     private String name;
 
+    @NotBlank
+    @NotEmpty
+    @Length(min = 10, max = 1000)
     private String description;
 
+    @LogoSizeConstraint
     private byte[] logo;
 
     @OneToMany(mappedBy = "technology")

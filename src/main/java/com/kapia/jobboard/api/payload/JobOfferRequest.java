@@ -1,6 +1,9 @@
 package com.kapia.jobboard.api.payload;
 
-import com.kapia.jobboard.api.model.JobOffer;
+import com.kapia.jobboard.api.constants.ContractType;
+import com.kapia.jobboard.api.constants.Experience;
+import com.kapia.jobboard.api.constants.OperatingMode;
+import com.kapia.jobboard.api.constants.SalaryType;
 
 import java.util.Date;
 import java.util.Map;
@@ -14,50 +17,50 @@ public class JobOfferRequest {
 
    String description;
 
-   String contractType;
+    ContractType contractType;
 
    int salary;
 
    String salaryCurrency;
 
-   JobOffer.SalaryType salaryType;
+    SalaryType salaryType;
 
-   String experience;
+    Experience experience;
 
-   JobOffer.OperatingMode operatingMode;
+    OperatingMode operatingMode;
 
    Date expiresAt;
 
-   long companyId;
+    long companyId;
 
-   long addressId;
+    long addressId;
 
-   Map<Long, String> technologies;
+    Map<Long, String> technologies;
 
-   public JobOfferRequest() {
-   }
+    public JobOfferRequest() {
+    }
 
-   public JobOfferRequest(String name, String shortDescription, String description, String contractType, int salary, String salaryCurrency, JobOffer.SalaryType salaryType, String experience, JobOffer.OperatingMode operatingMode, Date expiresAt, long companyId, long addressId, Map<Long, String> technologies) {
-      this.name = name;
-      this.shortDescription = shortDescription;
-      this.description = description;
-      this.contractType = contractType;
-      this.salary = salary;
-      this.salaryCurrency = salaryCurrency;
-      this.salaryType = salaryType;
-      this.experience = experience;
-      this.operatingMode = operatingMode;
-      this.expiresAt = expiresAt;
-      this.companyId = companyId;
-      this.addressId = addressId;
-      this.technologies = technologies;
-   }
+    public JobOfferRequest(String name, String shortDescription, String description, ContractType contractType, int salary, String salaryCurrency, SalaryType salaryType, Experience experience, OperatingMode operatingMode, Date expiresAt, long companyId, long addressId, Map<Long, String> technologies) {
+        this.name = name;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.contractType = contractType;
+        this.salary = salary;
+        this.salaryCurrency = salaryCurrency;
+        this.salaryType = salaryType;
+        this.experience = experience;
+        this.operatingMode = operatingMode;
+        this.expiresAt = expiresAt;
+        this.companyId = companyId;
+        this.addressId = addressId;
+        this.technologies = technologies;
+    }
 
-   public String getName() {
-      return name;
-   }
+    public String getName() {
+        return name;
+    }
 
-   public void setName(String name) {
+    public void setName(String name) {
       this.name = name;
    }
 
@@ -69,71 +72,71 @@ public class JobOfferRequest {
       this.shortDescription = shortDescription;
    }
 
-   public String getDescription() {
-      return description;
-   }
+    public String getDescription() {
+        return description;
+    }
 
-   public void setDescription(String description) {
-      this.description = description;
-   }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-   public String getContractType() {
-      return contractType;
-   }
+    public ContractType getContractType() {
+        return contractType;
+    }
 
-   public void setContractType(String contractType) {
-      this.contractType = contractType;
-   }
+    public void setContractType(ContractType contractType) {
+        this.contractType = contractType;
+    }
 
-   public int getSalary() {
-      return salary;
-   }
+    public int getSalary() {
+        return salary;
+    }
 
-   public void setSalary(int salary) {
-      this.salary = salary;
-   }
+    public void setSalary(int salary) {
+        this.salary = salary;
+    }
 
-   public String getSalaryCurrency() {
-      return salaryCurrency;
-   }
+    public String getSalaryCurrency() {
+        return salaryCurrency;
+    }
 
-   public void setSalaryCurrency(String salaryCurrency) {
-      this.salaryCurrency = salaryCurrency;
-   }
+    public void setSalaryCurrency(String salaryCurrency) {
+        this.salaryCurrency = salaryCurrency;
+    }
 
-   public JobOffer.SalaryType getSalaryType() {
-      return salaryType;
-   }
+    public SalaryType getSalaryType() {
+        return salaryType;
+    }
 
-   public void setSalaryType(JobOffer.SalaryType salaryType) {
-      this.salaryType = salaryType;
-   }
+    public void setSalaryType(SalaryType salaryType) {
+        this.salaryType = salaryType;
+    }
 
-   public String getExperience() {
-      return experience;
-   }
+    public Experience getExperience() {
+        return experience;
+    }
 
-   public void setExperience(String experience) {
-      this.experience = experience;
-   }
+    public void setExperience(Experience experience) {
+        this.experience = experience;
+    }
 
-   public JobOffer.OperatingMode getOperatingMode() {
-      return operatingMode;
-   }
+    public OperatingMode getOperatingMode() {
+        return operatingMode;
+    }
 
-   public void setOperatingMode(JobOffer.OperatingMode operatingMode) {
-      this.operatingMode = operatingMode;
-   }
+    public void setOperatingMode(OperatingMode operatingMode) {
+        this.operatingMode = operatingMode;
+    }
 
-   public Date getExpiresAt() {
-      return expiresAt;
-   }
+    public Date getExpiresAt() {
+        return expiresAt;
+    }
 
-   public void setExpiresAt(Date expiresAt) {
-      this.expiresAt = expiresAt;
-   }
+    public void setExpiresAt(Date expiresAt) {
+        this.expiresAt = expiresAt;
+    }
 
-   public long getCompanyId() {
+    public long getCompanyId() {
       return companyId;
    }
 

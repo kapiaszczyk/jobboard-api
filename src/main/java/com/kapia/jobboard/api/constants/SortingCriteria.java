@@ -1,4 +1,4 @@
-package com.kapia.jobboard.api.sorting;
+package com.kapia.jobboard.api.constants;
 
 public enum SortingCriteria {
 
@@ -46,7 +46,7 @@ public enum SortingCriteria {
             case "SALARY":
                 return SALARY;
             default:
-                throw new IllegalArgumentException("Unknown sorting criteria: " + value);
+                throw new IllegalArgumentException("Unknown constants criteria: " + value);
         }
     }
 

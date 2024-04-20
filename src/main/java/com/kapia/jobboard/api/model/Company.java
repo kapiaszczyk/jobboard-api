@@ -2,7 +2,11 @@ package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.URL;
 
 import java.util.Arrays;
 import java.util.Set;
@@ -15,17 +19,28 @@ public class Company {
     private Long id;
 
     @NotNull
+    @NotBlank
+    @Length(min = 5, max = 255)
     private String name;
 
     @NotNull
+    @NotBlank
+    @Length(min = 50, max = 5000)
     private String description;
 
     @NotNull
+    @NotBlank
+    @URL
+    @Length(min = 10, max = 255)
     private String website;
 
+    @Email
     @NotNull
+    @NotBlank
+    @Length(min = 5, max = 255)
     private String email;
 
+    //    @LogoSizeConstraint
     private byte[] logo;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)

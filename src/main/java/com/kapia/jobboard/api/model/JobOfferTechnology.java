@@ -1,6 +1,8 @@
 package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.kapia.jobboard.api.annotation.DegreeOfKnowledgeSubset;
+import com.kapia.jobboard.api.constants.DegreeOfKnowledge;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
@@ -23,18 +25,25 @@ public class JobOfferTechnology {
     private Technology technology;
 
     @NotNull
-    private String degreeOfKnowledge;
+    @DegreeOfKnowledgeSubset(anyOf = {
+            DegreeOfKnowledge.NONE,
+            DegreeOfKnowledge.BEGINNER,
+            DegreeOfKnowledge.INTERMEDIATE,
+            DegreeOfKnowledge.ADVANCED,
+            DegreeOfKnowledge.EXPERT
+    })
+    private DegreeOfKnowledge degreeOfKnowledge;
 
     public JobOfferTechnology() {
     }
 
-    public JobOfferTechnology( JobOffer jobOffer, Technology technology, String degreeOfKnowledge) {
+    public JobOfferTechnology(JobOffer jobOffer, Technology technology, DegreeOfKnowledge degreeOfKnowledge) {
         this.jobOffer = jobOffer;
         this.technology = technology;
         this.degreeOfKnowledge = degreeOfKnowledge;
     }
 
-    public JobOfferTechnology(JobOfferTechnologyKey id, JobOffer jobOffer, Technology technology, String degreeOfKnowledge) {
+    public JobOfferTechnology(JobOfferTechnologyKey id, JobOffer jobOffer, Technology technology, DegreeOfKnowledge degreeOfKnowledge) {
         this.id = id;
         this.jobOffer = jobOffer;
         this.technology = technology;
@@ -65,11 +74,11 @@ public class JobOfferTechnology {
         this.technology = technology;
     }
 
-    public String getDegreeOfKnowledge() {
+    public DegreeOfKnowledge getDegreeOfKnowledge() {
         return degreeOfKnowledge;
     }
 
-    public void setDegreeOfKnowledge(String degreeOfKnowledge) {
+    public void setDegreeOfKnowledge(DegreeOfKnowledge degreeOfKnowledge) {
         this.degreeOfKnowledge = degreeOfKnowledge;
     }
 }

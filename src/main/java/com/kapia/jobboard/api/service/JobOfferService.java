@@ -1,13 +1,14 @@
 package com.kapia.jobboard.api.service;
 
+import com.kapia.jobboard.api.constants.DegreeOfKnowledge;
+import com.kapia.jobboard.api.constants.SortingCriteria;
+import com.kapia.jobboard.api.constants.SortingOrder;
 import com.kapia.jobboard.api.model.*;
 import com.kapia.jobboard.api.payload.JobOfferRequest;
 import com.kapia.jobboard.api.projections.JobOfferBasicView;
 import com.kapia.jobboard.api.projections.JobOfferDetailedView;
 import com.kapia.jobboard.api.repository.*;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
-import com.kapia.jobboard.api.sorting.SortingCriteria;
-import com.kapia.jobboard.api.sorting.SortingOrder;
 import com.kapia.jobboard.api.specifications.JobOfferSpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.CacheManager;
@@ -17,6 +18,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -87,6 +89,7 @@ public class JobOfferService {
     /*
      * Optimisation candidate (generates too many queries to the DB!)
      */
+    @Transactional
     public Optional<JobOfferBasicView> add(JobOfferRequest jobOfferRequest) {
 
         Company company = companyRepository.findById(jobOfferRequest.getCompanyId())
@@ -109,7 +112,7 @@ public class JobOfferService {
 
         for (Technology technology : technologies) {
             Long technologyId = technology.getId();
-            String degreeOfKnowledge = jobOfferRequest.getTechnologies().get(technologyId);
+            DegreeOfKnowledge degreeOfKnowledge = DegreeOfKnowledge.valueOf(jobOfferRequest.getTechnologies().get(technologyId));
 
             jobOfferTechnologies.add(new JobOfferTechnology(
                     new JobOfferTechnologyKey(jobOffer.getId(), technologyId),
@@ -129,6 +132,7 @@ public class JobOfferService {
     /*
      * Optimisation candidate (generates too many queries to the DB!)
      */
+    @Transactional
     public JobOffer update(JobOfferRequest jobOfferRequest, Long id) {
         JobOffer jobOfferToUpdate = jobOfferRepository.findById(id).orElseThrow(() -> new RuntimeException("Invalid id"));
 
@@ -158,7 +162,7 @@ public class JobOfferService {
 
         for (Map.Entry<Long, String> entry : jobOfferRequest.getTechnologies().entrySet()) {
             Long technologyId = entry.getKey();
-            String degreeOfKnowledge = entry.getValue();
+            DegreeOfKnowledge degreeOfKnowledge = DegreeOfKnowledge.valueOf(entry.getValue());
 
             // Check if the job offer already has a technology with the given ID
             Optional<JobOfferTechnology> existingJobOfferTechnologyO = jobOfferTechnologies.stream()

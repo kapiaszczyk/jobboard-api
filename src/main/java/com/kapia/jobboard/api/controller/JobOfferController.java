@@ -1,10 +1,10 @@
 package com.kapia.jobboard.api.controller;
 
+import com.kapia.jobboard.api.constants.SortingCriteria;
+import com.kapia.jobboard.api.constants.SortingOrder;
 import com.kapia.jobboard.api.payload.JobOfferRequest;
 import com.kapia.jobboard.api.searchcriteria.JobOfferSearchCriteria;
 import com.kapia.jobboard.api.service.JobOfferService;
-import com.kapia.jobboard.api.sorting.SortingCriteria;
-import com.kapia.jobboard.api.sorting.SortingOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
