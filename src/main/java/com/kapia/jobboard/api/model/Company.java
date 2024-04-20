@@ -1,6 +1,7 @@
 package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kapia.jobboard.api.annotation.LogoSizeConstraint;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,7 +41,7 @@ public class Company {
     @Length(min = 5, max = 255)
     private String email;
 
-    //    @LogoSizeConstraint
+    @LogoSizeConstraint
     private byte[] logo;
 
     @OneToMany(mappedBy = "company", cascade = CascadeType.ALL, orphanRemoval = true)

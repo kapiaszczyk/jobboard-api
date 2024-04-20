@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 
 @Entity(name = "address")
@@ -17,24 +18,24 @@ public class Address {
     @NotNull
     @NotBlank
     @Length(min = 3, max = 255)
-//    @Pattern(regexp = "^[a-zA-Z0-9\\s\\-']+$")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s\\-']+$")
     private String street;
 
     @NotNull
     @NotBlank
     @Length(min = 3, max = 255)
-//    @Pattern(regexp = "^[a-zA-Z\\s\\-']+$")
+    @Pattern(regexp = "^[a-zA-Z\\s\\-']+$")
     private String city;
 
     @NotNull
     @Max(7)
-//    @Pattern(regexp = "^[a-zA-Z0-9\\s\\-]+$")
+    @Pattern(regexp = "^[a-zA-Z0-9\\s\\-]+$")
     private String postalCode;
 
     @NotNull
     @NotBlank
     @Length(min = 3, max = 255)
-//    @Pattern(regexp = "^[a-zA-Z\\s\\-']+$")
+    @Pattern(regexp = "^[a-zA-Z\\s\\-']+$")
     private String country;
 
     @ManyToOne(fetch = FetchType.LAZY)
