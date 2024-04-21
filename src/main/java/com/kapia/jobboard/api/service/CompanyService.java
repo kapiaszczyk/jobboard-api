@@ -2,9 +2,9 @@ package com.kapia.jobboard.api.service;
 
 import com.kapia.jobboard.api.constants.Messages;
 import com.kapia.jobboard.api.dto.CompanyAddressDTO;
-import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
+import com.kapia.jobboard.api.exception.IncompleteDataException;
 import com.kapia.jobboard.api.exception.ResourceNotFoundException;
-import com.kapia.jobboard.api.mapper.CompanyMappper;
+import com.kapia.jobboard.api.mapper.CompanyMapper;
 import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
 import com.kapia.jobboard.api.repository.CompanyRepository;
@@ -24,13 +24,13 @@ public class CompanyService {
 
     private final JobOfferRepository jobOfferRepository;
 
-    private final CompanyMappper companyMappper;
+    private final CompanyMapper companyMapper;
 
     @Autowired
-    public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository, CompanyMappper companyMappper) {
+    public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
         this.jobOfferRepository = jobOfferRepository;
-        this.companyMappper = companyMappper;
+        this.companyMapper = companyMapper;
     }
 
     public List<Company> findAll() {
@@ -41,26 +41,27 @@ public class CompanyService {
         return companyRepository.findByName(name);
     }
 
+    @Transactional
     public Company add(CompanyAddressDTO companyAddressDTO) {
         Company company = companyAddressDTO.getCompany();
         Set<Address> addressSet = companyAddressDTO.getAddresses();
-        if (company == null || addressSet.isEmpty()) throw new RuntimeException("Incomplete data");
+
+        if (company == null || addressSet == null || addressSet.isEmpty())
+            throw new IncompleteDataException(Messages.INCOMPLETE_DATA);
 
         company.addAddresses(addressSet);
-
         return companyRepository.save(company);
 
     }
 
     @Transactional
-    public Company updateAddresses(Set<Address> addresses, long id) {
+    public Company update(CompanyAddressDTO dto, long id) {
+        if (dto == null)
+            throw new IncompleteDataException(Messages.INCOMPLETE_DATA);
+
         Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
 
-        companyToUpdate.addAddresses(addresses);
-
-        companyRepository.save(companyToUpdate);
-
-        return companyToUpdate;
+        return companyRepository.save(companyMapper.updateCompanyFromDto(dto, companyToUpdate));
     }
 
     public void deleteCompany(long id) {
@@ -68,13 +69,6 @@ public class CompanyService {
         jobOfferRepository.deleteJobOfferTechnologiesByCompanyId(id);
         jobOfferRepository.deleteByCompanyId(id);
         companyRepository.delete(company);
-    }
-
-    @Transactional
-    public Company update(CompanyUpdateDTO dto, long id) {
-        Company companyToUpdate = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
-        companyToUpdate = companyMappper.updateCompanyFromDto(dto, companyToUpdate);
-        return companyRepository.save(companyToUpdate);
     }
 
 }

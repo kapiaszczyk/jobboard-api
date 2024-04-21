@@ -2,7 +2,6 @@ package com.kapia.jobboard.api.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -28,7 +27,7 @@ public class Address {
     private String city;
 
     @NotNull
-    @Max(7)
+    @Length(min = 3, max = 255)
     @Pattern(regexp = "^[a-zA-Z0-9\\s\\-]+$")
     private String postalCode;
 
@@ -111,7 +110,6 @@ public class Address {
                 ", city='" + city + '\'' +
                 ", postalCode='" + postalCode + '\'' +
                 ", country='" + country + '\'' +
-                ", company=" + company +
                 '}';
     }
 }

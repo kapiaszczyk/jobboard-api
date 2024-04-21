@@ -94,7 +94,6 @@ public class Technology {
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", logo=" + Arrays.toString(logo) +
-                ", jobOfferTechnologies=" + jobOfferTechnologies +
                 '}';
     }
 }

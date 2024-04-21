@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.URL;
 
-import java.util.Arrays;
 import java.util.Set;
 
 @Entity(name = "company")
@@ -139,8 +138,7 @@ public class Company {
                 ", description='" + description + '\'' +
                 ", website='" + website + '\'' +
                 ", email='" + email + '\'' +
-                ", logo=" + Arrays.toString(logo) +
-                ", addresses=" + addresses +
+                ", logo=" + logo +
                 '}';
     }
 }

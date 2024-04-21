@@ -1,40 +1,46 @@
 package com.kapia.jobboard.api.mapper;
 
-import com.kapia.jobboard.api.dto.CompanyUpdateDTO;
+import com.kapia.jobboard.api.dto.CompanyAddressDTO;
+import com.kapia.jobboard.api.model.Address;
 import com.kapia.jobboard.api.model.Company;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Component
-public class CompanyMapperImpl implements  CompanyMappper {
+public class CompanyMapperImpl implements CompanyMapper {
 
     @Override
-    public Company updateCompanyFromDto(CompanyUpdateDTO dto, Company companyToUpdate) {
+    public Company updateCompanyFromDto(@NotNull CompanyAddressDTO dto, @NotNull Company companyToUpdate) {
 
-        if (dto == null || companyToUpdate == null) {
-            throw new RuntimeException("Company not found");
+        Company companyFromDto = dto.getCompany();
+        String name = getValueOrDefault(companyFromDto.getName(), companyToUpdate.getName());
+        String description = getValueOrDefault(companyFromDto.getDescription(), companyToUpdate.getDescription());
+        String website = getValueOrDefault(companyFromDto.getWebsite(), companyToUpdate.getWebsite());
+        String email = getValueOrDefault(companyFromDto.getEmail(), companyToUpdate.getEmail());
+        byte[] logo = getValueOrDefault(companyFromDto.getLogo(), companyToUpdate.getLogo());
+
+        Set<Address> addresses = new HashSet<>();
+        if (dto.getAddresses() != null) {
+            addresses.addAll(dto.getAddresses());
         }
+        addresses.addAll(companyToUpdate.getAddresses());
 
-        Company companyWithNewDetails = dto.getCompany();
+        Company companyWithNewDetails = new Company();
         companyWithNewDetails.setId(companyToUpdate.getId());
-        companyWithNewDetails.setAddresses(companyToUpdate.getAddresses());
-
-        if (companyWithNewDetails.getName() != null) {
-            companyToUpdate.setName(companyWithNewDetails.getName());
-        }
-        if (companyWithNewDetails.getDescription() != null) {
-            companyToUpdate.setDescription(companyWithNewDetails.getDescription());
-        }
-        if (companyWithNewDetails.getWebsite() != null) {
-            companyToUpdate.setWebsite(companyWithNewDetails.getWebsite());
-        }
-        if (companyWithNewDetails.getEmail() != null) {
-            companyToUpdate.setEmail(companyWithNewDetails.getEmail());
-        }
-        if (companyWithNewDetails.getLogo() != null) {
-            companyToUpdate.setLogo(companyWithNewDetails.getLogo());
-        }
+        companyWithNewDetails.setName(name);
+        companyWithNewDetails.setDescription(description);
+        companyWithNewDetails.setWebsite(website);
+        companyWithNewDetails.setEmail(email);
+        companyWithNewDetails.setLogo(logo);
+        companyWithNewDetails.addAddresses(addresses);
 
         return companyWithNewDetails;
+    }
 
+    private <T> T getValueOrDefault(T value, T defaultValue) {
+        return value != null ? value : defaultValue;
     }
 }
