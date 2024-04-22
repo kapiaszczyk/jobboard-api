@@ -78,6 +78,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/company/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/company/**").hasAnyRole("USER", "ADMIN")
 
+                        .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/job-offer/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.DELETE, "/company/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.POST, "/technology").hasRole("ADMIN")
