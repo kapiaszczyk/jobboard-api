@@ -72,8 +72,6 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/company/**").permitAll()
 
                         .requestMatchers(HttpMethod.POST, "/job-offer/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/job-offer/**").hasAuthority("USER")
-                        .requestMatchers(HttpMethod.POST, "/job-offer/**").hasAuthority("USER")
                         .requestMatchers(HttpMethod.PUT, "/job-offer/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.POST, "/company/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/company/**").hasAnyRole("USER", "ADMIN")
