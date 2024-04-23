@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ControllerAdvice
+@ControllerAdvice(assignableTypes = AuthControllerExceptionHandler.class)
 public class AuthControllerExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthControllerExceptionHandler.class);

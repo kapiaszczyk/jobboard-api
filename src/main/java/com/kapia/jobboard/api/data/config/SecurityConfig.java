@@ -51,6 +51,20 @@ public class SecurityConfig {
     @Value("${jwt.private.key}")
     RSAPrivateKey private_key;
 
+    private static final String[] SWAGGER_AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+    };
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -59,22 +73,24 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
 
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/auth/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/job-offer/**").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/company/**").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/job-offers/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/companies/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/addresses/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/technologies/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, SWAGGER_AUTH_WHITELIST).permitAll()
 
-                        .requestMatchers(HttpMethod.POST, "/job-offer/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/job-offer/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/company/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/company/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/job-offers/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/job-offers/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/companies/**").hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/job-offer/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/company/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/technology").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/technology/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/job-offers/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/technologies").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/technologies/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/actuator/**").hasRole("ADMIN")
 
                         .anyRequest().authenticated()
                 )
