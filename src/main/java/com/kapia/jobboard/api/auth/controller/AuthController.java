@@ -28,6 +28,7 @@ public class AuthController {
         this.authService = authService;
     }
 
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public Map<String, Object> registerUser(@RequestBody RegistrationRequest appUser) {
         return authService.registerUser(appUser);
