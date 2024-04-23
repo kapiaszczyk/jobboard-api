@@ -1,7 +1,11 @@
 package com.kapia.jobboard.api.data.ratelimiting;
 
+import com.kapia.jobboard.api.auth.controller.AuthController;
+import com.kapia.jobboard.api.data.constants.Defaults;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -11,6 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 @Service
 public class RateLimitingService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
+
     private static final int BUCKET_CAPACITY = 100;
     private static final int REFILL_TOKENS = 100;
     private static final Duration REFILL_PERIOD = Duration.ofSeconds(60);
@@ -18,20 +24,26 @@ public class RateLimitingService {
 
     public RateLimitingService() {
 
+        LOGGER.info("Global rate limit: {}, refilling with {} tokens per {} seconds", BUCKET_CAPACITY, REFILL_TOKENS, REFILL_PERIOD.getSeconds());
+
         Bandwidth bandwidth = Bandwidth.builder()
                 .capacity(BUCKET_CAPACITY).refillGreedy(REFILL_TOKENS, REFILL_PERIOD).build();
 
         Bucket bucket = Bucket.builder().addLimit(bandwidth).build();
 
-        cache.put("global_bucket", bucket);
+        cache.put(Defaults.GLOBAL_BUCKET_KEY, bucket);
 
     }
 
 
     public boolean tryConsume(String key) {
-        Bucket bucket = cache.computeIfAbsent(key, k -> cache.get("global_bucket"));
+        Bucket bucket = cache.computeIfAbsent(key, k -> cache.get(Defaults.GLOBAL_BUCKET_KEY));
         return bucket.tryConsume(1);
     }
 
 
+    public String getRemainingTokens(String defaultKey) {
+        Bucket bucket = cache.computeIfAbsent(defaultKey, k -> cache.get(Defaults.GLOBAL_BUCKET_KEY));
+        return String.valueOf(bucket.getAvailableTokens());
+    }
 }

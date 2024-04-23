@@ -1,6 +1,8 @@
 package com.kapia.jobboard.api.auth.util;
 
 import com.kapia.jobboard.api.data.constants.Defaults;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,13 +18,14 @@ import java.util.stream.Collectors;
 @Component
 public class JWTUtil {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JWTUtil.class);
+
     @Autowired
     JwtEncoder encoder;
 
     public String generateToken(Authentication authentication) {
 
         Instant now = Instant.now();
-
         List<String> scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
@@ -34,6 +37,8 @@ public class JWTUtil {
                 .subject(authentication.getName())
                 .claim("roles", scope)
                 .build();
+
+        LOGGER.info("Token generated for user {} with expiry time {} ", authentication.getName(), Defaults.TOKEN_EXPIRATION_TIME_SECONDS);
 
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }

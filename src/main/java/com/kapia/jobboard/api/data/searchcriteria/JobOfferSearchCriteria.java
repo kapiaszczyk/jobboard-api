@@ -1,5 +1,7 @@
 package com.kapia.jobboard.api.data.searchcriteria;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.util.Optional;
 import java.util.Set;
 
@@ -178,5 +180,14 @@ public class JobOfferSearchCriteria {
                 ", salaryMin=" + salaryMin +
                 ", salaryMax=" + salaryMax +
                 '}';
+    }
+
+    public String toJSON() {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(this);
+        } catch (Exception e) {
+            return "JSON serialization error: " + e.getMessage();
+        }
     }
 }

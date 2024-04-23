@@ -12,6 +12,8 @@ import com.kapia.jobboard.api.auth.request.LoginRequest;
 import com.kapia.jobboard.api.auth.request.RegistrationRequest;
 import com.kapia.jobboard.api.auth.util.JWTUtil;
 import com.kapia.jobboard.api.data.constants.Messages;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -29,6 +31,8 @@ import java.util.Map;
 
 @Service
 public class UserService {
+
+    private final Logger LOGGER = LoggerFactory.getLogger(UserService.class);
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -80,6 +84,8 @@ public class UserService {
                         authorities
                 ));
 
+        LOGGER.info("User registered: {} ", appUser.getUsername());
+
         return Map.of("jwt-token", token);
     }
 
@@ -109,6 +115,8 @@ public class UserService {
             authManager.authenticate(authenticationToken);
 
             String token = jwtUtil.generateToken(authenticationToken);
+
+            LOGGER.info("User logged in: {}", appUser.getUsername());
 
             return Map.of("jwt-token", token);
         } catch (AuthenticationException e) {

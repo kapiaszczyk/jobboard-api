@@ -8,4 +8,6 @@ public class Defaults {
 
     public static final long TOKEN_EXPIRATION_TIME_SECONDS = 15 * 60;
 
+    public static final String GLOBAL_BUCKET_KEY = "global_bucket";
+
 }

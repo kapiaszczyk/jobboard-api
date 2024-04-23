@@ -3,6 +3,8 @@ package com.kapia.jobboard.api.data.specifications;
 import com.kapia.jobboard.api.data.model.JobOffer;
 import com.kapia.jobboard.api.data.searchcriteria.JobOfferSearchCriteria;
 import jakarta.persistence.criteria.JoinType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.CollectionUtils;
 
@@ -12,7 +14,12 @@ import java.util.Set;
 
 public class JobOfferSpecifications {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(JobOfferSpecifications.class);
+
     public static Specification<JobOffer> createJobOfferSpecification(JobOfferSearchCriteria criteria) {
+
+        LOGGER.info("Creating job offer specification with criteria: {}", criteria.toJSON());
+
         return Specification.where(nameContains(criteria.getName()))
                 .and(companyNameContains(criteria.getCompanyName()))
                 .and(locationContains(criteria.getLocation()))
