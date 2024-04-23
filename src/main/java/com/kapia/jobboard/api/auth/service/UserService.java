@@ -10,7 +10,6 @@ import com.kapia.jobboard.api.auth.repository.RoleRepository;
 import com.kapia.jobboard.api.auth.repository.UserRepository;
 import com.kapia.jobboard.api.auth.request.LoginRequest;
 import com.kapia.jobboard.api.auth.request.RegistrationRequest;
-import com.kapia.jobboard.api.auth.util.AppUserAdapter;
 import com.kapia.jobboard.api.auth.util.JWTUtil;
 import com.kapia.jobboard.api.data.constants.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +20,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -129,25 +124,5 @@ public class UserService {
                 .orElseThrow(() -> new UserNotFoundException(Messages.USER_NOT_FOUND));
     }
 
-    @Component
-    public static class CustomUserDetailsService implements UserDetailsService {
-
-        private UserRepository userRepository;
-
-        @Autowired
-        public CustomUserDetailsService(UserRepository userRepository) {
-            this.userRepository = userRepository;
-        }
-
-        @Override
-        public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-            AppUser appUser = userRepository.findByUsername(username)
-                    .orElseThrow(() -> new UsernameNotFoundException(Messages.USER_NOT_FOUND));
-
-            return new AppUserAdapter(appUser);
-
-        }
-    }
 }
 

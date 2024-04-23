@@ -1,7 +1,7 @@
 package com.kapia.jobboard.api.data.config;
 
 import com.kapia.jobboard.api.auth.converters.CustomAuthenticationConverter;
-import com.kapia.jobboard.api.auth.service.UserService;
+import com.kapia.jobboard.api.auth.service.CustomUserDetailsService;
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -31,7 +31,6 @@ import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthen
 import org.springframework.security.oauth2.server.resource.web.access.BearerTokenAccessDeniedHandler;
 import org.springframework.security.web.SecurityFilterChain;
 
-import javax.sql.DataSource;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
 
@@ -40,12 +39,10 @@ import java.security.interfaces.RSAPublicKey;
 public class SecurityConfig {
 
     private final UserDetailsService userDetailsService;
-    private final DataSource dataSource;
 
     @Autowired
-    public SecurityConfig(UserService.CustomUserDetailsService userDetailsService, DataSource dataSource) {
+    public SecurityConfig(CustomUserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
-        this.dataSource = dataSource;
     }
 
     @Value("${jwt.public.key}")
