@@ -20,7 +20,7 @@ public class Company {
 
     @NotNull
     @NotBlank
-    @Length(min = 5, max = 255)
+    @Length(max = 255)
     private String name;
 
     @NotNull
@@ -31,13 +31,13 @@ public class Company {
     @NotNull
     @NotBlank
     @URL
-    @Length(min = 10, max = 255)
+    @Length(max = 255)
     private String website;
 
     @Email
     @NotNull
     @NotBlank
-    @Length(min = 5, max = 255)
+    @Length(max = 255)
     private String email;
 
     @LogoSizeConstraint

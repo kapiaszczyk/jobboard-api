@@ -22,7 +22,7 @@ public class JobOffer {
 
     @NotBlank
     @NotNull
-    @Length(min = 10, max = 255)
+    @Length(max = 255)
     private String name;
 
     @NotBlank

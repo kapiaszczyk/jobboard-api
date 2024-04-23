@@ -20,7 +20,7 @@ public class Technology {
 
     @NotBlank
     @NotEmpty
-    @Length(min = 3, max = 255)
+    @Length(min = 1, max = 255)
     private String name;
 
     @NotBlank
