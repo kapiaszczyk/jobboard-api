@@ -1,5 +1,6 @@
 package com.kapia.jobboard.api.auth.util;
 
+import com.kapia.jobboard.api.data.constants.Defaults;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,8 +20,8 @@ public class JWTUtil {
     JwtEncoder encoder;
 
     public String generateToken(Authentication authentication) {
+
         Instant now = Instant.now();
-        long expiry = 36000L;
 
         List<String> scope = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -29,10 +30,11 @@ public class JWTUtil {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plusSeconds(expiry))
+                .expiresAt(now.plusSeconds(Defaults.TOKEN_EXPIRATION_TIME_SECONDS))
                 .subject(authentication.getName())
                 .claim("roles", scope)
                 .build();
+
         return this.encoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();
     }
 

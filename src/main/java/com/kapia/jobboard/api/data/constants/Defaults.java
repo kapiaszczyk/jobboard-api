@@ -6,4 +6,6 @@ public class Defaults {
 
     public static final String ROLE_PREFIX = "ROLE_";
 
+    public static final long TOKEN_EXPIRATION_TIME_SECONDS = 15 * 60;
+
 }
