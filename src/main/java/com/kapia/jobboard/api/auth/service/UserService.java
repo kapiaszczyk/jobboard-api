@@ -66,6 +66,12 @@ public class UserService {
         appUser.setPassword(passwordEncoder.encode(password));
         appUser.setEmail(email);
 
+        try {
+            RoleEnum.valueOf(role);
+        } catch (IllegalArgumentException e) {
+            throw new RoleNotFoundException(Messages.RESOURCE_NOT_FOUND);
+        }
+
         Role userRole = roleRepository.findByName(RoleEnum.valueOf(role))
                 .orElseThrow(() -> new RoleNotFoundException(Messages.RESOURCE_NOT_FOUND)
                 );
