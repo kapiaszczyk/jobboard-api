@@ -35,7 +35,7 @@ public class RateLimitingFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@Nonnull HttpServletRequest request, @Nonnull HttpServletResponse response, @Nonnull FilterChain filterChain) throws ServletException, IOException {
 
         if (!rateLimitingService.tryConsume(Defaults.GLOBAL_BUCKET_KEY)) {
-            LOGGER.warn("Rate limit exceeded for request: {} from IP: {} ", request.getRequestURI(), hash(request.getRemoteAddr()));
+            LOGGER.warn("Rate limit exceeded for request {} from IP {} ", request.getRequestURI(), hash(request.getRemoteAddr()));
             response.setStatus(HttpStatus.TOO_MANY_REQUESTS.value());
             return;
         }
