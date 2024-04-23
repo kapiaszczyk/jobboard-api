@@ -6,6 +6,8 @@ import com.kapia.jobboard.api.auth.exception.UserNotFoundException;
 import com.kapia.jobboard.api.data.constants.Messages;
 import com.kapia.jobboard.api.data.error.ErrorResponse;
 import jakarta.validation.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ControllerAdvice
 public class AuthControllerExceptionHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthControllerExceptionHandler.class);
+
     @ExceptionHandler(UserAlreadyExistsException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
     private ResponseEntity<?> handleUserAlreadyExistsException(UserAlreadyExistsException e) {
@@ -26,6 +30,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.CONFLICT)
                 .message(e.getMessage())
                 .error(Messages.USER_ALREADY_EXISTS_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.CONFLICT)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -41,6 +48,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .message(e.getMessage())
                 .error(Messages.USER_NOT_FOUND_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -56,6 +66,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .message(e.getMessage())
                 .error(Messages.ROLE_NOT_FOUND_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -71,6 +84,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.UNAUTHORIZED)
                 .message(e.getMessage())
                 .error(Messages.RESOURCE_NOT_FOUND_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -85,6 +101,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.NOT_FOUND)
                 .message(e.getMessage())
                 .error(Messages.USER_NOT_FOUND_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.NOT_FOUND)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -99,6 +118,9 @@ public class AuthControllerExceptionHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .message(e.getMessage())
                 .error(Messages.INVALID_DATA_ERR).build();
+
+        LOGGER.info(errorResponse.getMessage());
+
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .contentType(MediaType.APPLICATION_JSON)
