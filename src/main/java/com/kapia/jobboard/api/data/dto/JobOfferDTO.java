@@ -21,7 +21,7 @@ public class JobOfferDTO {
 
     int salary;
 
-   String salaryCurrency;
+    String salaryCurrency;
 
     SalaryType salaryType;
 
@@ -29,7 +29,7 @@ public class JobOfferDTO {
 
     OperatingMode operatingMode;
 
-   Date expiresAt;
+    Date expiresAt;
 
     long companyId;
 

@@ -31,7 +31,7 @@ public class TechnologyController {
         return ResponseEntity.status(HttpStatus.OK).body(technologyService.findAll());
     }
 
-    @Operation(summary = "Get a technology by id")
+    @Operation(summary = "Add a technology")
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> create(@RequestBody List<Technology> technologies) {
         return ResponseEntity.status(HttpStatus.CREATED).body(technologyService.create(technologies));
