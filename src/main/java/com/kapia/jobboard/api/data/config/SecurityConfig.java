@@ -86,11 +86,11 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/api/v1/companies/**").hasAnyRole("USER", "ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/companies/**").hasAnyRole("USER", "ADMIN")
 
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/job-offers/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.POST, "/api/v1/technologies").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/technologies/**").hasRole("ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/actuator/**").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/job-offers/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/companies/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.POST, "/api/v1/technologies").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/technologies/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/actuator/**").hasAnyRole("ADMIN", "SUPER_ADMIN")
 
                         .anyRequest().authenticated()
                 )

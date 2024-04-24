@@ -4,8 +4,10 @@ import com.kapia.jobboard.api.auth.controller.AuthController;
 import com.kapia.jobboard.api.data.constants.Defaults;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
+import jakarta.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -17,14 +19,24 @@ public class RateLimitingService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthController.class);
 
-    private static final int BUCKET_CAPACITY = 100;
-    private static final int REFILL_TOKENS = 100;
-    private static final Duration REFILL_PERIOD = Duration.ofSeconds(60);
+    @Value("${rate.limit.bucket.capacity}")
+    private int BUCKET_CAPACITY;
+
+    @Value("${rate.limit.refill.period.seconds}")
+    private int REFILL_PERIOD_SECONDS;
+
+    @Value("${rate.limit.refill.tokens}")
+    private int REFILL_TOKENS;
+
+    private Duration REFILL_PERIOD;
+
     private final Map<String, Bucket> cache = new ConcurrentHashMap<>();
 
-    public RateLimitingService() {
+    @PostConstruct
+    public void init() {
+        LOGGER.info("Global rate limit: {}, refilling with {} tokens per {} seconds", BUCKET_CAPACITY, REFILL_TOKENS, REFILL_PERIOD_SECONDS);
 
-        LOGGER.info("Global rate limit: {}, refilling with {} tokens per {} seconds", BUCKET_CAPACITY, REFILL_TOKENS, REFILL_PERIOD.getSeconds());
+        REFILL_PERIOD = Duration.ofSeconds(REFILL_PERIOD_SECONDS);
 
         Bandwidth bandwidth = Bandwidth.builder()
                 .capacity(BUCKET_CAPACITY).refillGreedy(REFILL_TOKENS, REFILL_PERIOD).build();
@@ -32,9 +44,7 @@ public class RateLimitingService {
         Bucket bucket = Bucket.builder().addLimit(bandwidth).build();
 
         cache.put(Defaults.GLOBAL_BUCKET_KEY, bucket);
-
     }
-
 
     public boolean tryConsume(String key) {
         Bucket bucket = cache.computeIfAbsent(key, k -> cache.get(Defaults.GLOBAL_BUCKET_KEY));

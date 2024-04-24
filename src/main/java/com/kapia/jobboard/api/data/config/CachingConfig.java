@@ -3,6 +3,7 @@ package com.kapia.jobboard.api.data.config;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.caffeine.CaffeineCacheManager;
@@ -17,9 +18,14 @@ public class CachingConfig {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CachingConfig.class);
 
-    private static final int INITIAL_CAPACITY = 100;
-    private static final int MAXIMUM_SIZE = 500;
-    private static final int EXPIRE_AFTER_WRITE_MINUTES = 1;
+    @Value("${cache.initial.capacity}")
+    private int INITIAL_CAPACITY;
+
+    @Value("${cache.maximum.size}")
+    private int MAXIMUM_SIZE;
+
+    @Value("${cache.expire.after.write.minutes}")
+    private int EXPIRE_AFTER_WRITE_MINUTES;
 
     @Bean
     public CacheManager cacheManager(Caffeine caffeine) {

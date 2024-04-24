@@ -1,15 +1,26 @@
 version: '2.25.0'
-name: jobboard
+name: jobboard-stack
 
 services:
-#  api:
-  #    image: kapiaszczyk/jobboard-api:0.0.2
-  #    ports:
-  #      - "3000:3000"
-  #    depends_on:
-  #      - postgres
-  #    networks:
-  #      - postgres-network
+  api:
+    image: kapiaszczyk/job-board:0.1.0
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    networks:
+      - postgres-network
+    environment:
+      JDBC_DATABASE_USERNAME: api
+      JDBC_DATABASE_PASSWORD: apipassword
+      JDBC_DATABASE_URL: jdbc:postgresql://postgres:5432
+      JDBC_DATABASE_NAME: jobboard
+      RATE_LIMIT_BUCKET_CAPACITY: 10
+      RATE_LIMIT_REFILL_PERIOD_SECONDS: 1
+      RATE_LIMIT_REFILL_TOKENS: 1
+      CACHE_INITIAL_CAPACITY: 100
+      CACHE_MAXIMUM_SIZE: 1000
+      CACHE_EXPIRE_AFTER_WRITE_MINUTES: 1
   postgres:
     image: postgres:16
     environment:
