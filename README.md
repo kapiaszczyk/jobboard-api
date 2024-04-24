@@ -10,8 +10,8 @@ related information, mainly company data.
 ## About
 
 The service utilizes Spring Data JPA for retrieving data and Spring Web for presenting it over endpoints. The data is
-cached thanks to Caffeine. The API is **globally rate limited** using bucket4j library, requests are authorized using **
-JWT** with help of Spring Security and **OAuth 2.0 Resource Server**. API documentation is automatically generated
+cached thanks to Caffeine. The API is **globally rate limited** using bucket4j library, requests are authorized using **OAuth2 JWT**
+with help of Spring Security. API documentation is automatically generated
 using **openAPI** and can be accessed via the Swagger UI.
 
 ## Docker image
