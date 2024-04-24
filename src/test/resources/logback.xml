@@ -1,5 +1,5 @@
 <configuration>
-    <property name="LOGS" value="./logs"/>
+    <property name="LOGS" value="./logs/test"/>
     <conversionRule conversionWord="threadId" converterClass="com.kapia.jobboard.api.data.util.ThreadIdConverter"/>
     <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
@@ -19,10 +19,10 @@
         </encoder>
     </appender>
     <appender name="RollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${LOGS}/production-logger.log</file>
+        <file>${LOGS}/test-logger.log</file>
         <rollingPolicy
                 class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
-            <fileNamePattern>${LOGS}/archived/production-logger-%d.%i.log</fileNamePattern>
+            <fileNamePattern>${LOGS}/archived/test-logger-%d.%i.log</fileNamePattern>
             <maxFileSize>5MB</maxFileSize>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
