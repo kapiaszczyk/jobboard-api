@@ -16,7 +16,7 @@ using **openAPI** and can be accessed via the Swagger UI.
 
 ## Docker image
 
-**You can find the docker image of the whole application [here]().**
+**You can find the docker image of the whole application [here](https://hub.docker.com/layers/kapiaszczyk/job-board/0.1.0/images/sha256-09c38ff2c95e4b528dad32a330f6b5f627994537d9f86ccb958906cf7b52f077?context=repo).**
 
 ## Features
 
