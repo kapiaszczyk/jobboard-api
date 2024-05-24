@@ -40,7 +40,7 @@ over the limit. The limit can be set through environment variables.
 
 User can register and log in using OAuth 2.0 Resource Server, that is running alongside the application. The user is
 authenticated using JWT tokens. Unauthorized users can only view data, while authenticated users have different
-privileges based on their role. Passwords stored in the database are hashed. The tokens are enctypted and signed using
+privileges based on their role. Passwords stored in the database are hashed. The tokens are encrypted and signed using
 RSA keys.
 
 ### Filters
@@ -71,33 +71,33 @@ created by OpenApi and available under the `/swagger-ui.html` or `/v3/api-docs`.
 
 The following endpoints will be available:
 
-| **Endpoint** | **Method** | **Description** |
-| --- | --- | --- |
-| `/api/v1/technologies/{id}` | *PUT* | Update a technology |
-| `/api/v1/job-offers/{id}` | *GET* | Get a job offer by id |
-| `/api/v1/job-offers/{id}` | *PUT* | Update a job offer |
-| `/api/v1/job-offers/{id}` | *DELETE* | Delete a job offer |
-| `/api/v1/companies/{id}` | *PUT* | Update a company |
-| `/api/v1/companies/{id}` | *DELETE* | Delete a company |
-| `/api/v1/technologies` | *GET* | Get all technologies |
-| `/api/v1/technologies` | *POST* | Add a technology |
-| `/api/v1/job-offers` | *GET* | Get all job offers |
-| `/api/v1/job-offers` | *POST* | Add a new job offer |
-| `/api/v1/companies` | *GET* | Get company by id |
-| `/api/v1/companies` | *POST* | Add a new company |
-| `/api/v1/auth/user` | *POST* | Get user details |
-| `/api/v1/auth/register` | *POST* | Register a new user |
-| `/api/v1/auth/login` | *POST* | Login as a user |
-| `/api/v1/job-offers/detailed` | *GET* | Get all job offers projected to detailed view |
-| `/api/v1/job-offers/detailed/{id}` | *GET* | Get a job offer by id projected to detailed view |
-| `/api/v1/job-offers/criteria` | *GET* | Get job offers filtered by criteria |
-| `/api/v1/job-offers/criteria-paged` | *GET* | Get job offers filtered by criteria, paged and sorted |
-| `/api/v1/job-offers/criteria-detailed` | *GET* | Get job offers filtered by criteria projected to detailed view |
-| `/api/v1/job-offers/criteria-detailed-paged` | *GET* | Get job offers filtered by criteria, paged and sorted, projected to detailed view |
-| `/api/v1/job-offers/basic` | *GET* | Get all job offers projected to basic view |
-| `/api/v1/job-offers/basic/{id}` | *GET* | Get a job offer by id projected to basic view |
-| `/api/v1/addresses` | *GET* | Get all addresses |
-| `/api/v1/addresses/companies/{companyName}` | *GET* | Get all addresses by company name |
+| **Endpoint**                                 | **Method** | **Description**                                                                   |
+|----------------------------------------------|------------|-----------------------------------------------------------------------------------|
+| `/api/v1/technologies/{id}`                  | *PUT*      | Update a technology                                                               |
+| `/api/v1/job-offers/{id}`                    | *GET*      | Get a job offer by id                                                             |
+| `/api/v1/job-offers/{id}`                    | *PUT*      | Update a job offer                                                                |
+| `/api/v1/job-offers/{id}`                    | *DELETE*   | Delete a job offer                                                                |
+| `/api/v1/companies/{id}`                     | *PUT*      | Update a company                                                                  |
+| `/api/v1/companies/{id}`                     | *DELETE*   | Delete a company                                                                  |
+| `/api/v1/technologies`                       | *GET*      | Get all technologies                                                              |
+| `/api/v1/technologies`                       | *POST*     | Add a technology                                                                  |
+| `/api/v1/job-offers`                         | *GET*      | Get all job offers                                                                |
+| `/api/v1/job-offers`                         | *POST*     | Add a new job offer                                                               |
+| `/api/v1/companies`                          | *GET*      | Get company by id                                                                 |
+| `/api/v1/companies`                          | *POST*     | Add a new company                                                                 |
+| `/api/v1/auth/user`                          | *POST*     | Get user details                                                                  |
+| `/api/v1/auth/register`                      | *POST*     | Register a new user                                                               |
+| `/api/v1/auth/login`                         | *POST*     | Login as a user                                                                   |
+| `/api/v1/job-offers/detailed`                | *GET*      | Get all job offers projected to detailed view                                     |
+| `/api/v1/job-offers/detailed/{id}`           | *GET*      | Get a job offer by id projected to detailed view                                  |
+| `/api/v1/job-offers/criteria`                | *GET*      | Get job offers filtered by criteria                                               |
+| `/api/v1/job-offers/criteria-paged`          | *GET*      | Get job offers filtered by criteria, paged and sorted                             |
+| `/api/v1/job-offers/criteria-detailed`       | *GET*      | Get job offers filtered by criteria projected to detailed view                    |
+| `/api/v1/job-offers/criteria-detailed-paged` | *GET*      | Get job offers filtered by criteria, paged and sorted, projected to detailed view |
+| `/api/v1/job-offers/basic`                   | *GET*      | Get all job offers projected to basic view                                        |
+| `/api/v1/job-offers/basic/{id}`              | *GET*      | Get a job offer by id projected to basic view                                     |
+| `/api/v1/addresses`                          | *GET*      | Get all addresses                                                                 |
+| `/api/v1/addresses/companies/{companyName}`  | *GET*      | Get all addresses by company name                                                 |
 
 *This table was generated from openAPI docs
 using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/extract_openapi_paths.py)*
@@ -106,18 +106,18 @@ using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/extr
 
 The following properties can be set from `docker-compose.yaml`:
 
-| **Environment variable** | **Default value** | **Corresponding property name** | **Description** |
-| --- | --- | --- | --- |
-| `JDBC_DATABASE_URL` | jdbc:postgresql://localhost:5432/ | `spring.datasource.url` | Database url with hostname and port |
-| `JDBC_DATABASE_NAME` | jobboard | `spring.datasource.url` | Name of the database |
-| `JDBC_DATABASE_USERNAME` | api | `spring.datasource.username` | Database user username |
-| `JDBC_DATABASE_PASSWORD` | apipassword | `spring.datasource.password` | Database user password |
-| `RATE_LIMIT_BUCKET_CAPACITY` | 100 | `rate.limit.bucket.capacity` | Global bucket capacity |
-| `RATE_LIMIT_REFILL_PERIOD_SECONDS` | 60 | `rate.limit.refill.period.seconds` | Refill period for the global bucket |
-| `RATE_LIMIT_REFILL_TOKENS` | 100 | `rate.limit.refill.tokens` | Tokens to refill |
-| `CACHE_INITIAL_CAPACITY` | 100 | `cache.initial.capacity` | Cache initial capacity |
-| `CACHE_MAXIMUM_SIZE` | 500 | `cache.maximum.size` | Maximum size of the cache  |
-| `CACHE_EXPIRE_AFTER_WRITE_MINUTES` | 1 | `cache.expire.after.write.minutes` | Expiration time of the cache |
+| **Environment variable**           | **Default value**                 | **Corresponding property name**    | **Description**                     |
+|------------------------------------|-----------------------------------|------------------------------------|-------------------------------------|
+| `JDBC_DATABASE_URL`                | jdbc:postgresql://localhost:5432/ | `spring.datasource.url`            | Database url with hostname and port |
+| `JDBC_DATABASE_NAME`               | jobboard                          | `spring.datasource.url`            | Name of the database                |
+| `JDBC_DATABASE_USERNAME`           | api                               | `spring.datasource.username`       | Database user username              |
+| `JDBC_DATABASE_PASSWORD`           | apipassword                       | `spring.datasource.password`       | Database user password              |
+| `RATE_LIMIT_BUCKET_CAPACITY`       | 100                               | `rate.limit.bucket.capacity`       | Global bucket capacity              |
+| `RATE_LIMIT_REFILL_PERIOD_SECONDS` | 60                                | `rate.limit.refill.period.seconds` | Refill period for the global bucket |
+| `RATE_LIMIT_REFILL_TOKENS`         | 100                               | `rate.limit.refill.tokens`         | Tokens to refill                    |
+| `CACHE_INITIAL_CAPACITY`           | 100                               | `cache.initial.capacity`           | Cache initial capacity              |
+| `CACHE_MAXIMUM_SIZE`               | 500                               | `cache.maximum.size`               | Maximum size of the cache           |
+| `CACHE_EXPIRE_AFTER_WRITE_MINUTES` | 1                                 | `cache.expire.after.write.minutes` | Expiration time of the cache        |
 
 *This table was generated from `application.properties` docs
 using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/properties_env_var_extractor.py)*
@@ -133,7 +133,7 @@ version, the following improvements could be made:
 
 - limiting creation of new accounts to a specific group of users
 - more detailed tests covering edge cases
-- optimization of some of the operations (mainly inserting and updating data)
+- optimization of some operations (mainly inserting and updating data)
 - caching improvements
 - JWT token refreshing
 - and many more
