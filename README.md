@@ -100,7 +100,7 @@ The following endpoints will be available:
 | `/api/v1/addresses/companies/{companyName}`  | *GET*      | Get all addresses by company name                                                 |
 
 *This table was generated from openAPI docs
-using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/extract_openapi_paths.py)*
+using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/documentation_tools/extract_openapi_paths.py)*
 
 ### Environment variables
 
@@ -120,7 +120,7 @@ The following properties can be set from `docker-compose.yaml`:
 | `CACHE_EXPIRE_AFTER_WRITE_MINUTES` | 1                                 | `cache.expire.after.write.minutes` | Expiration time of the cache        |
 
 *This table was generated from `application.properties` docs
-using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/properties_env_var_extractor.py)*
+using [this script](https://github.com/kapiaszczyk/python-scripts/blob/main/documentation_tools/properties_env_var_extractor.py)*
 
 ## Reliability
 
