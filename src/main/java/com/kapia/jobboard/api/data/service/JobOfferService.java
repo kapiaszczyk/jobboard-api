@@ -84,8 +84,12 @@ public class JobOfferService {
         return jobOfferRepository.findDetailedProjectedById(id);
     }
 
-    /*
-     * Optimisation candidate (generates too many queries to the DB!)
+    /**
+     * Method to add a new job offer to the database.
+     * 
+     * @param jobOfferDTO The DTO containing the job offer data.
+     * @return The newly added job offer.
+     * @throws ResourceNotFoundException If the company or address with the given ID does not exist.
      */
     @Transactional
     public Optional<JobOfferBasicView> add(JobOfferDTO jobOfferDTO) {
@@ -127,8 +131,15 @@ public class JobOfferService {
         return jobOfferRepository.findProjectedById(jobOffer.getId());
     }
 
-    /*
-     * Optimisation candidate (generates too many queries to the DB!)
+
+    /**
+     * Method to update a job offer by its ID.
+     * 
+     * @param jobOfferDTO The DTO containing the updated job offer data.
+     * @param id The ID of the job offer to update.
+     * 
+     * @return The updated job offer.
+     * @throws ResourceNotFoundException If the job offer with the given ID does not exist.
      */
     @Transactional
     public JobOffer update(JobOfferDTO jobOfferDTO, Long id) {
@@ -183,16 +194,35 @@ public class JobOfferService {
 
     }
 
+    /**
+     * Method to delete a job offer by its ID.
+     * 
+     * @param id The ID of the job offer to delete.
+     * @throws ResourceNotFoundException If the job offer with the given ID does not exist.
+     */
     public void deleteById(long id) {
         JobOffer jobOffer = jobOfferRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
         jobOfferRepository.delete(jobOffer);
     }
 
+    /**
+     * Method to delete all job offers.
+     * 
+     * @param jobOfferSearchCriteria The search criteria to filter job offers.
+     * @return A list of job offers that match the search criteria.
+     * @throws ResourceNotFoundException If the job offer with the given ID does not exist.
+     */
     public List<JobOffer> findJobOfferByCriteria(JobOfferSearchCriteria jobOfferSearchCriteria) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
         return jobOfferRepository.findAll(specification);
     }
 
+    /**
+     * Method to retrieve job offers by search criteria and project them into a DTO.
+     * 
+     * @param jobOfferSearchCriteria The search criteria to filter job offers.
+     * @return A list of job offers projected into a DTO.
+     */
     public List<JobOfferDetailedView> getJobOfferByCriteriaProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
         return jobOfferRepository.findBy(specification, q -> q
@@ -202,6 +232,16 @@ public class JobOfferService {
         );
     }
 
+    /**
+     * Method to retrieve job offers by search criteria and sort them by created date in ascending order.
+     * 
+     * @param jobOfferSearchCriteria The search criteria to filter job offers.
+     * @param pageSize The number of job offers to retrieve per page.
+     * @param pageNumber The page number to retrieve job offers from.
+     * @param sortingCriteria The criteria to sort job offers by.
+     * @param sortingOrder The order to sort job offers by.
+     * @return A list of job offers sorted by created date in ascending order.
+     */
     public List<JobOffer> findJobOfferByCriteriaPageAndSortByCreatedAtAsc(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber, String sortingCriteria, String sortingOrder) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
 
@@ -212,6 +252,14 @@ public class JobOfferService {
         return jobOfferRepository.findAll(specification, pageable).stream().toList();
     }
 
+    /**
+     * Method to retrieve job offers by search criteria and sort them by created date in ascending order.
+     * 
+     * @param jobOfferSearchCriteria The search criteria to filter job offers.
+     * @param pageSize The number of job offers to retrieve per page.
+     * @param pageNumber The page number to retrieve job offers from.
+     * @return A list of job offers sorted by created date in ascending order.
+     */
     public List<JobOfferDetailedView> findJobOfferByCriteriaPageAndSortByCreatedAtAscProjectedBy(JobOfferSearchCriteria jobOfferSearchCriteria, int pageSize, int pageNumber) {
         Specification<JobOffer> specification = JobOfferSpecifications.createJobOfferSpecification(jobOfferSearchCriteria);
 
@@ -225,12 +273,24 @@ public class JobOfferService {
         ).stream().toList();
     }
 
+    /**
+     * Method to resolve the sorting criteria and order for job offers.
+     * 
+     * @param sortBy The criteria to sort job offers by.
+     * @param sortDirection The order to sort job offers by.
+     */
     private Sort resolveSorting(String sortBy, String sortDirection) {
         String field = resolveSortingCriteria(sortBy);
         String order = resolveSortingOrder(sortDirection);
         return Sort.by(Sort.Order.by(field).with(Sort.Direction.fromString(order)));
     }
 
+    /**
+     * Resolves the sorting criteria based on the given sortBy parameter.
+     *
+     * @param sortBy the sorting criteria to be resolved
+     * @return the resolved sorting criteria as a string
+     */
     private String resolveSortingCriteria(String sortBy) {
         try {
             return SortingCriteria.fromString(sortBy.toUpperCase()).toString();
@@ -239,6 +299,13 @@ public class JobOfferService {
         }
     }
 
+
+    /**
+     * Resolves the sorting order based on the given sortDirection parameter.
+     *
+     * @param sortDirection the sorting order to be resolved
+     * @return the resolved sorting order as a string
+     */
     private String resolveSortingOrder(String sortDirection) {
         try {
             return SortingOrder.fromString(sortDirection.toUpperCase()).toString();
