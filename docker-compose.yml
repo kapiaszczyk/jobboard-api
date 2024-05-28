@@ -34,6 +34,12 @@ services:
     networks:
       - postgres-network
     command: postgres -c log_statement=all
+  javadoc:
+    image: nginx:latest
+    ports:
+      - "8081:80" # Change 8081 to whatever port you want to use
+    volumes:
+      - ./docs:/usr/share/nginx/html:ro
 
 networks:
   postgres-network:
