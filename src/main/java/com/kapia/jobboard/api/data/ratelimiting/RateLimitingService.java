@@ -14,6 +14,10 @@ import java.time.Duration;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * This class represents a rate limiting service that allows controlling the rate at which certain operations can be performed.
+ * It uses a token bucket algorithm to limit the number of requests that can be made within a specific time period.
+ */
 @Service
 public class RateLimitingService {
 

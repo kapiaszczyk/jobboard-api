@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * Represents the search criteria for a job offer.
+ */
 public class JobOfferSearchCriteria {
 
     private Optional<String> name;

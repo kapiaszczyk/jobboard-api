@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class represents a service for managing technologies in the job board application.
+ */
 @Service
 public class TechnologyService {
 

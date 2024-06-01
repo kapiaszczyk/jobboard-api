@@ -7,6 +7,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * This class represents the service layer for managing addresses.
+ */
 @Service
 public class AddressService {
 

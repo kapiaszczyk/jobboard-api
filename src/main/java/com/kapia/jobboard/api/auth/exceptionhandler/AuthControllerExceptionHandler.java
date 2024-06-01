@@ -17,6 +17,10 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+/**
+ * Global exception handler for the authentication controller.
+ * This class handles various exceptions that can occur during authentication operations and returns appropriate error responses.
+ */
 @ControllerAdvice(assignableTypes = AuthControllerExceptionHandler.class)
 public class AuthControllerExceptionHandler {
 

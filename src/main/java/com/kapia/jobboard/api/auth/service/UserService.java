@@ -29,6 +29,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+/**
+ * The UserService class is responsible for handling user-related operations such as user registration, login, and retrieving user details.
+ * It interacts with the UserRepository, RoleRepository, PasswordEncoder, AuthenticationManager, and JWTUtil to perform these operations.
+ */
 @Service
 public class UserService {
 

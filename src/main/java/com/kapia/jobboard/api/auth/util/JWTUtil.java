@@ -15,6 +15,9 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Utility class for generating JSON Web Tokens (JWT) for authentication.
+ */
 @Component
 public class JWTUtil {
 

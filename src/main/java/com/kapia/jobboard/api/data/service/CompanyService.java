@@ -17,6 +17,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+/**
+ * The CompanyService class provides methods for managing company data.
+ */
 @Service
 public class CompanyService {
 

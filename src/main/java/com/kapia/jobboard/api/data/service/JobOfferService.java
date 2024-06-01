@@ -22,6 +22,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * The JobOfferService class is responsible for providing various operations related to job offers.
+ * It interacts with the JobOfferRepository, CompanyRepository, AddressRepository, TechnologyRepository,
+ * and JobOfferTechnologyRepository to perform CRUD operations and retrieve job offer data.
+ * This class also utilizes caching to improve performance for certain operations.
+ */
 @Service
 public class JobOfferService {
 
