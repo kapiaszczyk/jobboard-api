@@ -12,6 +12,9 @@ import io.swagger.v3.oas.annotations.security.SecuritySchemes;
 import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * Configuration class for OpenAPI documentation.
+ */
 @Configuration
 @OpenAPIDefinition(
         info = @Info(
@@ -26,7 +29,6 @@ import org.springframework.context.annotation.Configuration;
                 termsOfService = "${tos.uri}",
                 description = "${api.description}"
         ),
-        // Define production and local servers
         servers = {
                 @Server(
                         url = "${api.server.production.url}",

@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.constants;
 
+/**
+ * The Messages class is a constant class that holds the error messages.
+ */
 public class Messages {
 
     public static final String RESOURCE_NOT_FOUND = "Resource not found";

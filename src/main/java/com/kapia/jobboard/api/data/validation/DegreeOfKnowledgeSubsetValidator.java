@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
+/**
+ * The DegreeOfKnowledgeSubsetValidator class is a validator class that validates the DegreeOfKnowledge enum.
+ */
 public class DegreeOfKnowledgeSubsetValidator implements ConstraintValidator<DegreeOfKnowledgeSubset, DegreeOfKnowledge> {
 
     private DegreeOfKnowledge[] subset;

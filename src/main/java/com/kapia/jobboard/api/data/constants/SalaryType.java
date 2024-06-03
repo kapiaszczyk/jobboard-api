@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The SalaryType class is a constant class that holds the valid salary types.
+ */
 public enum SalaryType {
     HOURLY("hourly"),
     MONTHLY("monthly"),

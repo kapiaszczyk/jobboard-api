@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The UserRepository interface provides methods for interacting with the users in the database.
+ */
 @Repository
 public interface UserRepository extends JpaRepository<AppUser, Long> {
 

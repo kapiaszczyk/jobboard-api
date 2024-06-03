@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.constants;
 
+/**
+ * The Currencies class is a constant class that holds the valid currencies.
+ */
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;

@@ -18,6 +18,9 @@ import java.util.stream.Collectors;
 
 import static org.slf4j.LoggerFactory.getLogger;
 
+/**
+ * The ControllerExceptionHandler class is a global exception handler that catches exceptions thrown by controllers.
+ */
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler {
 

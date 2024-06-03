@@ -29,6 +29,13 @@ public class CompanyService {
 
     private final CompanyMapper companyMapper;
 
+    /**
+     * Constructor for the CompanyService.
+     *
+     * @param companyRepository The repository to be used for company related operations.
+     * @param jobOfferRepository The repository to be used for job offer related operations.
+     * @param companyMapper The mapper to be used for company related operations.
+     */
     @Autowired
     public CompanyService(CompanyRepository companyRepository, JobOfferRepository jobOfferRepository, CompanyMapper companyMapper) {
         this.companyRepository = companyRepository;
@@ -36,14 +43,31 @@ public class CompanyService {
         this.companyMapper = companyMapper;
     }
 
+    /**
+     * This method is responsible for retrieving all companies.
+     *
+     * @return A list of all companies.
+     */
     public List<Company> findAll() {
         return companyRepository.findAll();
     }
 
+    /**
+     * This method is responsible for retrieving a company by ID.
+     *
+     * @param name The name of the company to retrieve.
+     * @return The company with the specified ID.
+     */
     public Optional<Company> findByName(String name) {
         return companyRepository.findByName(name);
     }
 
+    /**
+     * This method is responsible for adding a new company.
+     *
+     * @param companyAddressDTO The company and addresses to add.
+     * @return The added company.
+     */
     @Transactional
     public Company add(CompanyAddressDTO companyAddressDTO) {
         Company company = companyAddressDTO.getCompany();
@@ -57,6 +81,13 @@ public class CompanyService {
 
     }
 
+    /**
+     * This method is responsible for updating a company.
+     *
+     * @param dto The company and addresses to update.
+     * @param id The ID of the company to update.
+     * @return The updated company.
+     */
     @Transactional
     public Company update(CompanyAddressDTO dto, long id) {
         if (dto == null)
@@ -67,6 +98,11 @@ public class CompanyService {
         return companyRepository.save(companyMapper.updateCompanyFromDto(dto, companyToUpdate));
     }
 
+    /**
+     * This method is responsible for deleting a company.
+     *
+     * @param id The ID of the company to delete.
+     */
     public void deleteCompany(long id) {
         Company company = companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND));
         jobOfferRepository.deleteJobOfferTechnologiesByCompanyId(id);

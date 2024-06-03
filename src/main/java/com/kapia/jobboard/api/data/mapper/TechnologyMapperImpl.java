@@ -4,9 +4,19 @@ import com.kapia.jobboard.api.data.dto.TechnologyDTO;
 import com.kapia.jobboard.api.data.model.Technology;
 import org.springframework.stereotype.Component;
 
+/**
+ * The TechnologyMapperImpl class is an implementation of the TechnologyMapper interface that provides methods for mapping technology data transfer objects to technology entities.
+ */
 @Component
 public class TechnologyMapperImpl implements TechnologyMapper {
 
+    /**
+     * Updates a technology entity with the details from a technology data transfer object.
+     *
+     * @param dto The technology data transfer object.
+     * @param technologyToUpdate The technology entity to update.
+     * @return The updated technology entity.
+     */
     @Override
     public Technology updateTechnologyWithDtoDetails(TechnologyDTO dto, Technology technologyToUpdate) {
 

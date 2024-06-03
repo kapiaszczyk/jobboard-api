@@ -6,6 +6,9 @@ import jakarta.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Represents a composite key for the JobOfferTechnology entity.
+ */
 @Embeddable
 public class JobOfferTechnologyKey implements Serializable {
 

@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * The CurrencyValidator class is a validator class that validates the Currency enum.
+ */
 public class CurrencyValidator implements ConstraintValidator<CurrencySubset, String> {
 
     List<String> subset;

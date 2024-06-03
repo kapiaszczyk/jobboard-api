@@ -6,6 +6,9 @@ import com.kapia.jobboard.api.data.constants.DegreeOfKnowledge;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 
+/**
+ * Represents a job offer technology in the job board application.
+ */
 @Entity(name = "job_offer_technology")
 public class JobOfferTechnology {
 

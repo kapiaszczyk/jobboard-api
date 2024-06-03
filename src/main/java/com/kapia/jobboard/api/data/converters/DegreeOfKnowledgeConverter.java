@@ -4,6 +4,9 @@ import com.kapia.jobboard.api.data.constants.DegreeOfKnowledge;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+/**
+ * The DegreeOfKnowledgeConverter class is a converter class that converts the DegreeOfKnowledge enum to a string and vice versa.
+ */
 @Converter(autoApply = true)
 public class DegreeOfKnowledgeConverter implements AttributeConverter<DegreeOfKnowledge, String> {
 

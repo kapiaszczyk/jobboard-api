@@ -7,6 +7,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * The RoleRepository interface provides methods for interacting with the roles in the database.
+ */
 @Repository
 public interface RoleRepository extends JpaRepository<Role, Long> {
 

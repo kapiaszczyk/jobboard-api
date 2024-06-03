@@ -11,7 +11,9 @@ import org.springframework.util.CollectionUtils;
 import java.util.Optional;
 import java.util.Set;
 
-
+/**
+ * The JobOfferSpecifications class is a class that creates a job offer specification with the given criteria.
+ */
 public class JobOfferSpecifications {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(JobOfferSpecifications.class);

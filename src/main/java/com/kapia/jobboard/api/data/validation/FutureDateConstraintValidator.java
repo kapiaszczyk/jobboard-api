@@ -6,6 +6,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Date;
 
+/**
+ * The FutureDateConstraintValidator class is a validator class that validates the date to be in the future.
+ */
 public class FutureDateConstraintValidator implements ConstraintValidator<FutureDateConstraint, Date> {
 
     // 604800000L is 7 days in milliseconds

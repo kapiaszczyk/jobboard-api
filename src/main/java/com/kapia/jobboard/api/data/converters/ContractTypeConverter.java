@@ -4,6 +4,9 @@ import com.kapia.jobboard.api.data.constants.ContractType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+/**
+ * The ContractTypeConverter class is a converter class that converts the ContractType enum to a string and vice versa.
+ */
 @Converter(autoApply = true)
 public class ContractTypeConverter implements AttributeConverter<ContractType, String> {
 

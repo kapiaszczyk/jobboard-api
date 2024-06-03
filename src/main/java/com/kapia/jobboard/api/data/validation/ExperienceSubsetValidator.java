@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
+/**
+ * The ExperienceSubsetValidator class is a validator class that validates the Experience enum.
+ */
 public class ExperienceSubsetValidator implements ConstraintValidator<ExperienceSubset, Experience> {
 
     private Experience[] subset;

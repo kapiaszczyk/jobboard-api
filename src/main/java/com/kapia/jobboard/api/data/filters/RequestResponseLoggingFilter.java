@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The RequestResponseLoggingFilter class is a filter that logs incoming requests and outgoing responses.
+ */
 @Component
 public class RequestResponseLoggingFilter implements Filter {
 

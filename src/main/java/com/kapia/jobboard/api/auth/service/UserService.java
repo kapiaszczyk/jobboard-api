@@ -44,6 +44,15 @@ public class UserService {
     private final AuthenticationManager authManager;
     private final JWTUtil jwtUtil;
 
+    /**
+     * Constructs a new UserService with the specified UserRepository, PasswordEncoder, JWTUtil, AuthenticationManager, and RoleRepository.
+     *
+     * @param userRepository the UserRepository to use
+     * @param passwordEncoder the PasswordEncoder to use
+     * @param jwtUtil the JWTUtil to use
+     * @param authManager the AuthenticationManager to use
+     * @param roleRepository the RoleRepository to use
+     */
     @Autowired
     public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, JWTUtil jwtUtil, AuthenticationManager authManager, RoleRepository roleRepository) {
         this.userRepository = userRepository;
@@ -53,6 +62,12 @@ public class UserService {
         this.roleRepository = roleRepository;
     }
 
+    /**
+     * Registers a new user with the specified registration details.
+     *
+     * @param dto the RegistrationRequest containing the user's registration details
+     * @return a Map containing the JWT token
+     */
     public Map<String, Object> registerUser(RegistrationRequest dto) {
 
         String username = dto.getUsername();
@@ -100,6 +115,12 @@ public class UserService {
     }
 
 
+    /**
+     * Logs in a user with the specified login details.
+     *
+     * @param loginRequest the LoginRequest containing the user's login details
+     * @return a Map containing the JWT token
+     */
     public Map<String, Object> login(LoginRequest loginRequest) {
 
         String email = loginRequest.getEmail();
@@ -134,6 +155,11 @@ public class UserService {
         }
     }
 
+    /**
+     * Retrieves the details of the currently logged in user.
+     *
+     * @return the AppUser containing the user's details
+     */
     public AppUser getUserDetails() {
         String email = (String)
                 SecurityContextHolder.getContext().getAuthentication().getPrincipal();

@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * This class is responsible for handling address related operations.
+ * It provides endpoints for retrieving address information.
+ */
 @Tag(name = "Address operations", description = "Retrieve address information")
 @RestController
 @RequestMapping("/api/v1/addresses")
@@ -20,11 +24,21 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    /**
+     * Constructor for the AddressController.
+     *
+     * @param addressService The service to be used for address related operations.
+     */
     @Autowired
     public AddressController(AddressService addressService) {
         this.addressService = addressService;
     }
 
+    /**
+     * This method is responsible for retrieving all addresses.
+     *
+     * @return A list of all addresses.
+     */
     @Operation(summary = "Get all addresses")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Address> findAll() {
@@ -32,6 +46,12 @@ public class AddressController {
     }
 
 
+    /**
+     * This method is responsible for retrieving all addresses by company name.
+     *
+     * @param companyName The name of the company to retrieve addresses for.
+     * @return A list of addresses for the specified company.
+     */
     @Operation(summary = "Get all addresses by company name")
     @GetMapping(value = "/companies/{companyName}", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<Address> findAllByCompanyName(@PathVariable String companyName) {

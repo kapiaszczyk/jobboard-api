@@ -11,6 +11,9 @@ import org.hibernate.validator.constraints.Length;
 import java.util.Arrays;
 import java.util.Set;
 
+/**
+ * Represents a technology in the job board application.
+ */
 @Entity(name = "technology")
 public class Technology {
 

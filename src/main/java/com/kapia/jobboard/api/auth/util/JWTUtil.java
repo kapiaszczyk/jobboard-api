@@ -26,6 +26,12 @@ public class JWTUtil {
     @Autowired
     JwtEncoder encoder;
 
+    /**
+     * Generates a JWT token for the specified authentication.
+     *
+     * @param authentication the authentication to generate the token for
+     * @return the generated JWT token
+     */
     public String generateToken(Authentication authentication) {
 
         Instant now = Instant.now();

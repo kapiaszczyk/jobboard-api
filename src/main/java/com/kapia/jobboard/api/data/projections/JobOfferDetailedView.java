@@ -13,6 +13,8 @@ public interface JobOfferDetailedView {
 
     String getContractType();
 
+    String getSalaryType();
+
     String getExperience();
 
     String getOperatingMode();
@@ -43,6 +45,7 @@ public interface JobOfferDetailedView {
 
     interface CompanyView {
         String getName();
+        byte[] getLogo();
     }
 
 }

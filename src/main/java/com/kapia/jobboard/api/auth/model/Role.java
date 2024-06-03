@@ -7,6 +7,9 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.util.Date;
 
+/**
+ * This class represents a role in the system.
+ */
 @Table(name = "roles")
 @Entity
 public class Role {

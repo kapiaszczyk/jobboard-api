@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.dto;
 
+/**
+ * The TechnologyDTO class is a data transfer object class that represents the technology data.
+ */
 public class TechnologyDTO {
 
     private String name;

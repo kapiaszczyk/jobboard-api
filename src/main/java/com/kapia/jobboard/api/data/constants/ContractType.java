@@ -5,6 +5,9 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * The contract type enumeration.
+ */
 public enum ContractType {
 
     FULL_TIME("full-time"),

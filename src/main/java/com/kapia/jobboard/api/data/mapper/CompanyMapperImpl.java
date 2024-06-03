@@ -9,9 +9,19 @@ import org.springframework.stereotype.Component;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * This class is responsible for mapping company data.
+ */
 @Component
 public class CompanyMapperImpl implements CompanyMapper {
 
+    /**
+     * This method is responsible for mapping a company DTO to a company entity.
+     *
+     * @param dto The DTO containing the company details.
+     * @param companyToUpdate The company to update.
+     * @return The updated company.
+     */
     @Override
     public Company updateCompanyFromDto(@NotNull CompanyAddressDTO dto, @NotNull Company companyToUpdate) {
 

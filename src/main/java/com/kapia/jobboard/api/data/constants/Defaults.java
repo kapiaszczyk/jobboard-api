@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.constants;
 
+/**
+ * The Defaults class is a constant class that holds the default values.
+ */
 public class Defaults {
 
     public static final int MAX_PAGE_SIZE = 35;

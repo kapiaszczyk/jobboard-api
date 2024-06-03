@@ -4,6 +4,9 @@ import com.kapia.jobboard.api.data.constants.SalaryType;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+/**
+ * The SalaryTypeConverter class is a converter class that converts the SalaryType enum to a string and vice versa.
+ */
 @Converter(autoApply = true)
 public class SalaryTypeConverter implements AttributeConverter<SalaryType, String> {
     @Override

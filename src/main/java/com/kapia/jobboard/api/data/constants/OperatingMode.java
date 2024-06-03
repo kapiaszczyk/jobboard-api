@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.constants;
 
+/**
+ * The OperatingMode class is a constant class that holds the valid operating modes.
+ */
 import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;

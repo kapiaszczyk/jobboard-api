@@ -15,6 +15,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * The ErrorResponse class is a data class that represents an error response.
+ */
 public class ErrorResponse {
 
     private Instant timestamp;

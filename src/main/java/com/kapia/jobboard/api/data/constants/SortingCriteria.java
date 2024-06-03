@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.constants;
 
+/**
+ * The SortingCriteria class is a constant class that holds the valid sorting criteria.
+ */
 public enum SortingCriteria {
 
     NAME {

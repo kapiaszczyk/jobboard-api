@@ -20,6 +20,9 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+/**
+ * The RateLimitingFilter class is a filter that limits the rate at which requests can be made to the API.
+ */
 @Component
 public class RateLimitingFilter extends OncePerRequestFilter {
 

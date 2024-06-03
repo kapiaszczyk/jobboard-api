@@ -1,5 +1,8 @@
 package com.kapia.jobboard.api.data.projections;
 
+/**
+ * Represents a basic view of a job offer.
+ */
 public interface JobOfferBasicView {
 
     String getName();

@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
+/**
+ * The SalaryTypeSubsetValidator class is a validator class that validates the SalaryType enum.
+ */
 public class SalaryTypeSubsetValidator implements ConstraintValidator<SalaryTypeSubset, SalaryType> {
 
     private SalaryType[] subset;

@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
+/**
+ * The OperatingModeSubsetValidator class is a validator class that validates the OperatingMode enum.
+ */
 public class OperatingModeSubsetValidator implements ConstraintValidator<OperatingModeSubset, OperatingMode> {
 
     private OperatingMode[] subset;

@@ -7,6 +7,9 @@ import jakarta.validation.ConstraintValidatorContext;
 
 import java.util.Arrays;
 
+/**
+ * The ContractTypeSubsetValidator class is a validator class that validates the ContractType enum.
+ */
 public class ContractTypeSubsetValidator implements ConstraintValidator<ContractTypeSubset, ContractType> {
 
     private ContractType[] subset;

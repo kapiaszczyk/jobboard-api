@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
 
 import java.time.Duration;
 
+/**
+ * Configuration class for caching.
+ */
 @Configuration
 @EnableCaching
 public class CachingConfig {

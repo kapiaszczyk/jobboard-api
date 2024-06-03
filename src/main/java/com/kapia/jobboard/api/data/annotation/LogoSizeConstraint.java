@@ -10,6 +10,9 @@ import java.lang.annotation.Target;
 
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * The LogoSizeConstraint interface is a constraint annotation that validates that the logo size is less than or equal to 1MB.
+ */
 @Constraint(validatedBy = LogoSizeValidator.class)
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Retention(RUNTIME)

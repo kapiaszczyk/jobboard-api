@@ -11,6 +11,9 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
+/**
+ * The DegreeOfKnowledgeSubset interface is a constraint annotation that validates that the degree of knowledge is any of the specified degrees of knowledge.
+ */
 @Constraint(validatedBy = DegreeOfKnowledgeSubsetValidator.class)
 @Target({METHOD, FIELD, ANNOTATION_TYPE, CONSTRUCTOR, PARAMETER, TYPE_USE})
 @Retention(RUNTIME)

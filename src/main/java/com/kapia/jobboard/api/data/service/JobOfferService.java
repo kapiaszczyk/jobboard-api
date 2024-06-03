@@ -43,6 +43,16 @@ public class JobOfferService {
 
     private final JobOfferTechnologyRepository jobOfferTechnologyRepository;
 
+    /**
+     * Constructs a new JobOfferService with the given repositories and cache manager.
+     *
+     * @param jobOfferRepository the job offer repository
+     * @param companyRepository the company repository
+     * @param addressRepository the address repository
+     * @param technologyRepository the technology repository
+     * @param jobOfferTechnologyRepository the job offer technology repository
+     * @param cacheManager the cache manager
+     */
     @Autowired
     public JobOfferService(JobOfferRepository jobOfferRepository, CompanyRepository companyRepository,
                            AddressRepository addressRepository, TechnologyRepository technologyRepository,
@@ -55,30 +65,63 @@ public class JobOfferService {
         this.cacheManager = cacheManager;
     }
 
+    /**
+     * Method to find a job offer by its ID.
+     *
+     * @param id The ID of the job offer to find.
+     * @return The job offer with the given ID.
+     */
     @Cacheable(cacheNames = "job_offers", key = "#id")
     public Optional<JobOffer> findJobOfferById(Long id) {
         return jobOfferRepository.findById(id);
     }
 
+    /**
+     * Method to find all job offers.
+     *
+     * @return A list of all job offers.
+     */
     public List<JobOffer> findAllJobOffers() {
         return jobOfferRepository.findAll();
     }
 
+    /**
+     * Method to find all job offers projected into a DTO.
+     *
+     * @return A list of all job offers projected into a DTO.
+     */
     @Cacheable(cacheNames = "job_offers_basic_view", key = "'findAllBasicProjectedBy'")
     public List<JobOfferBasicView> findAllBasicProjectedBy() {
         return jobOfferRepository.findAllBasicProjectedBy();
     }
 
+    /**
+     * Method to find a job offer by its ID and project it into a DTO.
+     *
+     * @param id The ID of the job offer to find.
+     * @return The job offer with the given ID projected into a DTO.
+     */
     @Cacheable(cacheNames = "job_offers_basic_view", key = "#id")
     public Optional<JobOfferBasicView> findBasicProjectedById(Long id) {
         return jobOfferRepository.findBasicProjectedById(id);
     }
 
+    /**
+     * Method to find all job offers and project them into a DTO.
+     *
+     * @return A list of all job offers projected into a DTO.
+     */
     @Cacheable(cacheNames = "job_offers_detailed_view", key = "'findAllDetailedProjectedBy'")
     public List<JobOfferDetailedView> findAllDetailedProjectedBy() {
         return jobOfferRepository.findAllDetailedProjectedBy();
     }
 
+    /**
+     * Method to find a job offer by its ID and project it into a DTO.
+     *
+     * @param id The ID of the job offer to find.
+     * @return The job offer with the given ID projected into a DTO.
+     */
     @Cacheable(cacheNames = "job_offers_detailed_view", key = "#id")
     public Optional<JobOfferDetailedView> findDetailedProjectedById(Long id) {
         return jobOfferRepository.findDetailedProjectedById(id);

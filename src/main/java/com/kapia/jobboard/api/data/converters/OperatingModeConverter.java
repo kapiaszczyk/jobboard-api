@@ -4,6 +4,9 @@ import com.kapia.jobboard.api.data.constants.OperatingMode;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
+/**
+ * The OperatingModeConverter class is a converter class that converts the OperatingMode enum to a string and vice versa.
+ */
 @Converter(autoApply = true)
 public class OperatingModeConverter implements AttributeConverter<OperatingMode, String> {
 

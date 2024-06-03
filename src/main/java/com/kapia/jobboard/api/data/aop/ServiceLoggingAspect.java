@@ -9,6 +9,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StopWatch;
 
+/**
+ * Aspect for logging service execution time.
+ */
 @Aspect
 @Component
 public class ServiceLoggingAspect {
