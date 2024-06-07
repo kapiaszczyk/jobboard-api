@@ -5,6 +5,8 @@ import java.util.Set;
 
 public interface JobOfferDetailedView {
 
+    Long getId();
+
     String getName();
 
     String getSalary();
