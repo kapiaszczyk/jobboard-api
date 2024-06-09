@@ -110,4 +110,14 @@ public class CompanyService {
         companyRepository.delete(company);
     }
 
+    /**
+     * This method is responsible for retrieving a company by its ID.
+     *
+     * @param id The ID of the company to retrieve.
+     * @return The company with the specified ID.
+     */
+    public Optional<Company> findById(long id) {
+        return Optional.ofNullable(companyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(Messages.RESOURCE_NOT_FOUND)));
+    }
+
 }

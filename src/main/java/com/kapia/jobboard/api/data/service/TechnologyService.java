@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This class represents a service for managing technologies in the job board application.
@@ -59,6 +60,16 @@ public class TechnologyService {
     public Technology update(TechnologyDTO dto, long id) {
         Technology technologyToUpdate = technologyRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Technology not found"));
         return technologyRepository.save(mapper.updateTechnologyWithDtoDetails(dto, technologyToUpdate));
+    }
+
+    /**
+     * Retrieves a technology by its id.
+     *
+     * @param id the id of the technology
+     * @return the technology with the given id
+     */
+    public Optional<Technology> findById(long id) {
+        return technologyRepository.findById(id);
     }
 
 }

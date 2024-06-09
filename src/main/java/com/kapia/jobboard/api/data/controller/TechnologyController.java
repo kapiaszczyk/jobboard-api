@@ -70,4 +70,16 @@ public class TechnologyController {
         return ResponseEntity.status(HttpStatus.OK).body(technologyService.update(technologyDTO, id));
     }
 
+    /**
+     * This method is responsible for fetching technology by id.
+     *
+     * @param id The id of the technology to be fetched.
+     * @return The technology with the specified id.
+     */
+    @Operation(summary = "Get a technology by id")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getTechnologyById(@PathVariable(value = "id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(technologyService.findById(id));
+    }
+
 }

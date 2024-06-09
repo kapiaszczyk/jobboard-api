@@ -1,5 +1,6 @@
 package com.kapia.jobboard.api.auth.exceptionhandler;
 
+import com.kapia.jobboard.api.auth.controller.AuthController;
 import com.kapia.jobboard.api.auth.exception.RoleNotFoundException;
 import com.kapia.jobboard.api.auth.exception.UserAlreadyExistsException;
 import com.kapia.jobboard.api.auth.exception.UserNotFoundException;
@@ -21,7 +22,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Global exception handler for the authentication controller.
  * This class handles various exceptions that can occur during authentication operations and returns appropriate error responses.
  */
-@ControllerAdvice(assignableTypes = AuthControllerExceptionHandler.class)
+@ControllerAdvice(assignableTypes = AuthController.class)
 public class AuthControllerExceptionHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AuthControllerExceptionHandler.class);

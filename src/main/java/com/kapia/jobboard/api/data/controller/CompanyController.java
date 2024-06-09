@@ -39,12 +39,24 @@ public class CompanyController {
     }
 
     /**
+     * This method is responsible for retrieving a company by its ID.
+     *
+     * @param id The ID of the company to retrieve.
+     * @return A response entity with the company.
+     */
+    @Operation(summary = "Get company by id")
+    @GetMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getCompanyById(@PathVariable(value = "id") long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(companyService.findById(id));
+    }
+
+    /**
      * This method is responsible for retrieving a company by its name.
      *
      * @param name The name of the company to retrieve.
      * @return A response entity with the company.
      */
-    @Operation(summary = "Get company by id")
+    @Operation(summary = "Get company by name")
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE, params = "name")
     public ResponseEntity<?> getCompanyByName(String name) {
         return ResponseEntity.status(HttpStatus.OK).body(companyService.findByName(name));
