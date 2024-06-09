@@ -2,7 +2,7 @@ version: '2.25.0'
 name: jobboard-stack
 
 services:
-  frontend:
+  client:
     image: kapiaszczyk/jobboardreact:latest
     ports:
       - "3000:3000"
@@ -13,7 +13,7 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - postgres
+      - database
     networks:
       - postgres-network
     environment:
@@ -27,7 +27,7 @@ services:
       CACHE_INITIAL_CAPACITY: 100
       CACHE_MAXIMUM_SIZE: 1000
       CACHE_EXPIRE_AFTER_WRITE_MINUTES: 1
-  postgres:
+  database:
     image: postgres:16
     environment:
       POSTGRES_USER: api
@@ -40,7 +40,7 @@ services:
     networks:
       - postgres-network
     command: postgres -c log_statement=all
-  ngnix:
+  resources:
     image: nginx:latest
     ports:
       - "8081:8081"
